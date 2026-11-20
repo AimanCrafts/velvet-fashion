@@ -1,4 +1,4 @@
-# Velvet Fashion | ভেলভেট ফ্যাশন
+# Velvet Fashion 
 
 A modern luxury fashion storefront and operations hub designed for the Bangladesh market, featuring bilingual support (Bangla & English), multi-tier delivery zone calculations, mobile financial service reconciliation (bKash & Nagad), and a staff fulfillment dashboard.
 
@@ -7,7 +7,7 @@ A modern luxury fashion storefront and operations hub designed for the Banglades
 ## Features
 
 - **Storefront & Catalog:** Curated luxury collections including Party Kaftans, Royal Panjabis, Exclusive Sarees, and Festive Kidswear.
-- **Bilingual Interface:** Full bilingual UI support in English and Bengali (`বাংলা`).
+- **Bilingual Interface:** Full bilingual UI support in English and Bengali.
 - **Bangladesh Logistics Engine:** Tiered shipping rates and estimated delivery times across Dhaka Metro, Dhaka Suburbs, Divisional Hubs (Chittagong/Sylhet), and nationwide express courier coverage across all 64 districts.
 - **Payment Methods:** Support for Cash on Delivery (COD), bKash Merchant Pay, and Nagad.
 - **Operations Dashboard:** Staff admin panel for live order status workflows, payment reconciliation, inventory lot intake, and regulatory business profile management.
