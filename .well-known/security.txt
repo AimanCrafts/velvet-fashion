@@ -1,0 +1,15 @@
+# Velvet Fashion Bangladesh — Security Disclosure Policy
+# Reference: RFC 9116 (https://www.rfc-editor.org/rfc/rfc9116)
+
+Contact: mailto:security@velvetfashion.com.bd
+Contact: https://wa.me/8801711223344
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en, bn
+Canonical: https://velvetfashion.com.bd/.well-known/security.txt
+Policy: https://velvetfashion.com.bd/security-policy
+Hiring: https://velvetfashion.com.bd/careers
+
+# Scope
+# In scope: Frontend storefront, Admin portal, Checkout endpoints, Data protection
+# Please report security vulnerabilities responsibly. We pledge to acknowledge reports within 48 hours.
+
