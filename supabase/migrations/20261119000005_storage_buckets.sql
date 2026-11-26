@@ -1,6 +1,3 @@
--- Storage buckets and media access policies
-
--- 1. Create Storage Buckets
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 VALUES
     ('catalog', 'catalog', TRUE, 5242880, ARRAY['image/jpeg', 'image/png', 'image/webp']),
@@ -11,14 +8,10 @@ ON CONFLICT (id) DO UPDATE SET
     file_size_limit = EXCLUDED.file_size_limit,
     allowed_mime_types = EXCLUDED.allowed_mime_types;
 
--- 2. Storage Row-Level Security Policies
-
--- Public can view catalog and brand assets
 CREATE POLICY "Public Access Catalog Images"
     ON storage.objects FOR SELECT
     USING (bucket_id IN ('catalog', 'brand'));
 
--- Only authenticated staff can upload or modify catalog assets
 CREATE POLICY "Staff Upload Catalog Images"
     ON storage.objects FOR INSERT
     WITH CHECK (
@@ -40,11 +33,9 @@ CREATE POLICY "Staff Delete Catalog Images"
         public.is_staff()
     );
 
--- Order documents (invoices, return forms) are strictly staff-only
 CREATE POLICY "Staff Manage Order Documents"
     ON storage.objects FOR ALL
     USING (
         bucket_id = 'order-documents' AND
         public.is_staff()
     );
-

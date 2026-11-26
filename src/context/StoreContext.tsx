@@ -14,13 +14,13 @@ import type {
   PaymentMethod,
 } from '../types';
 import {
-  sampleProducts,
+  coreProducts,
   deliveryZones,
   initialLots,
   initialOrders,
   initialSiteSettings,
-} from '../data/mockData';
-import { additionalProducts } from '../data/additionalProducts';
+} from '../data/storeData';
+import { additionalProducts } from '../data/catalog';
 import {
   isSupabaseConfigured,
   createOrderRemote,
@@ -41,9 +41,8 @@ export interface StoreContextType {
   setLang: (lang: Language) => void;
   toggleLang: () => void;
   isBn: boolean;
-  isAr: boolean; // Backwards-compatible alias for isBn
+  isAr: boolean;
 
-  // Catalog & Filters
   products: Product[];
   activeAudience: Audience;
   setActiveAudience: (aud: Audience) => void;
@@ -61,14 +60,12 @@ export interface StoreContextType {
   selectedProductForQuickView: Product | null;
   setSelectedProductForQuickView: (p: Product | null) => void;
 
-  // Wishlist & History
   wishlist: string[];
   toggleWishlist: (id: string) => void;
   isWishlisted: (id: string) => boolean;
   recentlyViewed: string[];
   pushRecentlyViewed: (id: string) => void;
 
-  // Cart
   cartItems: CartItem[];
   cartCount: number;
   cartSubtotal: number;
@@ -79,7 +76,6 @@ export interface StoreContextType {
   removeCartItem: (variantId: string) => void;
   clearCart: () => void;
 
-  // Checkout & Orders
   isCheckoutOpen: boolean;
   setIsCheckoutOpen: (open: boolean) => void;
   deliveryZones: DeliveryZone[];
@@ -102,19 +98,16 @@ export interface StoreContextType {
   }) => Promise<{ success: boolean; orderId: string; lookupToken?: string; error?: string }>;
   updateOrderStatus: (orderId: string, status: OrderStatus) => void;
 
-  // Admin & Lots
   isAdminOpen: boolean;
   setIsAdminOpen: (open: boolean) => void;
   lots: LotRecord[];
   addLot: (lot: LotRecord) => void;
 
-  // Guidelines & Settings
   siteSettings: SiteSettings;
   updateSiteSettings: (settings: SiteSettings) => void;
   isDesignSystemOpen: boolean;
   setIsDesignSystemOpen: (open: boolean) => void;
 
-  // Toast
   toast: ToastMessage | null;
   showToast: (title: string, message?: string, type?: 'success' | 'info' | 'error') => void;
 }
@@ -150,7 +143,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setSortBy('featured');
   };
 
-  const [products, setProducts] = useState<Product[]>([...sampleProducts, ...additionalProducts]);
+  const [products, setProducts] = useState<Product[]>([...coreProducts, ...additionalProducts]);
   const [activeDeliveryZones, setActiveDeliveryZones] = useState<DeliveryZone[]>(deliveryZones);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [orders, setOrders] = useState<Order[]>(() => {
@@ -161,7 +154,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return [...parsed, ...initialOrders];
       }
     } catch {
-      // ignore
+      return initialOrders;
     }
     return initialOrders;
   });
@@ -181,7 +174,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
       if (prodRes.status === 'fulfilled' && prodRes.value && prodRes.value.length > 0) {
         const enriched = prodRes.value.map((remoteProd) => {
-          const fallback = [...sampleProducts, ...additionalProducts].find((sp) => sp.id === remoteProd.id);
+          const fallback = [...coreProducts, ...additionalProducts].find((sp) => sp.id === remoteProd.id);
           return {
             ...remoteProd,
             additionalImages: remoteProd.additionalImages ?? fallback?.additionalImages,
@@ -205,13 +198,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   }, []);
 
-  // Persist placed customer orders across sessions
   useEffect(() => {
     try {
       const customerOrders = orders.filter((o) => !initialOrders.some((init) => init.id === o.id));
       localStorage.setItem('vf_customer_orders', JSON.stringify(customerOrders));
     } catch {
-      // storage unavailable
+      return;
     }
   }, [orders]);
 
@@ -230,7 +222,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     try {
       localStorage.setItem('vf_wishlist', JSON.stringify(wishlist));
     } catch {
-      // storage unavailable
+      return;
     }
   }, [wishlist]);
 
@@ -243,11 +235,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [toast, setToast] = useState<ToastMessage | null>(null);
 
   const isBn = lang === 'bn';
-  const isAr = isBn; // Aliased for full backwards compatibility
+  const isAr = isBn;
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    document.documentElement.dir = 'ltr'; // Bengali is LTR
+    document.documentElement.dir = 'ltr';
   }, [lang]);
 
   const toggleLang = () => {
@@ -332,7 +324,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const clearCart = () => setCartItems([]);
 
   const placeOrder = (order: Order) => {
-    // Atomic stock deduction simulation
     setProducts((prevProducts) =>
       prevProducts.map((p) => ({
         ...p,
@@ -427,7 +418,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           orderNotes: orderInput.orderNotes,
         };
 
-        // Deduct local variant stock immediately
         setProducts((prevProducts) =>
           prevProducts.map((p) => ({
             ...p,

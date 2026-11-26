@@ -65,7 +65,6 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Architectural 3:4 Image Frame */}
       <div className="relative aspect-[3/4] overflow-hidden bg-[#F2ECE4] border border-[#ECE4D4] group-hover:border-[#C5A059]/70 transition-colors duration-300">
         {imgError ? (
           <div className="w-full h-full flex flex-col items-center justify-center bg-[#24030B] text-[#F4E2B5] p-4 text-center">
@@ -107,7 +106,6 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           </>
         )}
 
-        {/* Top-left Status Tags */}
         <div className="absolute top-3 start-3 flex flex-col gap-1.5 z-10">
           {product.newArrival && inStock && (
             <span className="bg-[#FAF8F5]/95 text-[#3E0713] text-[9px] font-bold tracking-[0.18em] uppercase px-2.5 py-1 border border-[#ECE4D4]">
@@ -121,7 +119,6 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           )}
         </div>
 
-        {/* Top-right Actions: Wishlist + Quick View */}
         <div className="absolute top-3 end-3 flex flex-col gap-1.5 z-10">
           <button
             type="button"
@@ -153,7 +150,6 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           </button>
         </div>
 
-        {/* Atticus-Finch-style Quick-Buy Size Bar on Hover */}
         {inStock && (
           <div
             onClick={(e) => {
@@ -205,7 +201,6 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         )}
       </div>
 
-      {/* Product Metadata */}
       <div className="pt-3.5 space-y-1">
         <div className="flex items-center justify-between gap-2">
           <p className="text-xs uppercase tracking-[0.14em] text-[#88652A] font-semibold truncate">

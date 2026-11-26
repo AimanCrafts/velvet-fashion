@@ -24,10 +24,9 @@ export const CategoryTiles: React.FC = () => {
       id: "women",
       title_en: "Women's Couture",
       title_bn: "নারী ও পার্টি শাড়ি-কাফতান",
-      subtitle_en: "Velvet Kaftans & Organza Sarees",
+      subtitle_en: "Velvet Kaftans & Brocade Sarees",
       subtitle_bn: "ভেলভেট কাফতান ও এক্সক্লুসিভ শাড়ি",
-      image:
-        "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=700&q=80",
+      image: "./products/kaftan-burgundy-velvet.jpg",
     },
     {
       index: "02",
@@ -36,8 +35,7 @@ export const CategoryTiles: React.FC = () => {
       title_bn: "পুরুষের পাঞ্জাবি ও শেরওয়ানি",
       subtitle_en: "Silk Panjabis & Velvet Cuts",
       subtitle_bn: "সিল্ক পাঞ্জাবি ও ভেলভেট শেরওয়ানি",
-      image:
-        "https://images.unsplash.com/photo-1597983073493-88cd35cf93b0?auto=format&fit=crop&w=700&q=80",
+      image: "./products/panjabi-champagne-silk.jpg",
     },
     {
       index: "03",
@@ -46,18 +44,17 @@ export const CategoryTiles: React.FC = () => {
       title_bn: "ছোটদের উৎসবের পোশাক",
       subtitle_en: "Combed Cotton & Velvet Kotis",
       subtitle_bn: "কটন পাঞ্জাবি ও ভেলভেট কোটি",
-      image:
-        "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=700&q=80",
+      image: "./products/kids-nawab-koti.jpg",
     },
     {
       index: "04",
       id: "unisex",
       title_en: "Shawls & Cashmere",
       title_bn: "পশমিনা ও উইন্টার শাল",
-      subtitle_en: "Reversible Mulberry & Cashmere",
-      subtitle_bn: "রিভার্সিবল কাশ্মীরি শাল",
+      subtitle_en: "Checked Cashmere & Wool Wraps",
+      subtitle_bn: "কাশ্মীরি ও উল উইন্টার শাল",
       image:
-        "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=700&q=80",
+        "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&w=700&q=80",
     },
   ];
 
@@ -69,7 +66,6 @@ export const CategoryTiles: React.FC = () => {
 
   return (
     <section className="container mx-auto px-4 py-12">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b border-[#ECE4D4]">
         <div>
           <p className="text-xs font-bold text-[#88652A] uppercase tracking-[0.25em] mb-1.5">
@@ -89,7 +85,6 @@ export const CategoryTiles: React.FC = () => {
         </button>
       </div>
 
-      {/* Architectural Portrait Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {categories.map((cat) => (
           <button

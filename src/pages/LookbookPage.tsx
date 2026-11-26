@@ -32,7 +32,7 @@ const STORIES: EditorialStory[] = [
     fabricNote_en: "85% Silk-Touch Royal Velvet • Micro-Velvet & Tissue Organza",
     fabricNote_bn: "৮৫% সিল্ক-টাচ রয়্যাল ভেলভেট • মাইক্রো-ভেলভেট ও টিস্যু অর্গানজা",
     image:
-      "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=85",
     productIds: ["prod-01", "prod-03", "prod-07", "prod-11"],
   },
   {
@@ -42,30 +42,29 @@ const STORIES: EditorialStory[] = [
     title_en: "Structured Silk & Sovereign Cuts",
     title_bn: "সিল্ক পাঞ্জাবি ও সভরেন শেরওয়ানি",
     body_en:
-      "Inspired by classic subcontinental tailoring and clean Scandinavian proportion, our menswear balances breathable raw silk-cotton panjabis with richly textured emerald velvet coats finished in antiqued brass.",
+      "Inspired by classic subcontinental tailoring and clean Scandinavian proportion, our menswear balances breathable raw silk-cotton panjabis with richly textured emerald velvet coats and tailored suits.",
     body_bn:
       "ঐতিহ্যবাহী পাঞ্জাবির আরাম এবং আধুনিক নিখুঁত কাটিংয়ের সমন্বয় — শ্বাস-প্রশ্বাসযোগ্য সিল্ক-কটন ও গভীর এমারেল্ড ভেলভেটে তৈরি।",
     fabricNote_en: "Raw Silk-Cotton Blend • Heavy Velvet & Antique Brass",
     fabricNote_bn: "র সিল্ক-কটন ব্লেন্ড • হেভি ভেলভেট ও অ্যান্টিক পিতল",
-    image:
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=85",
-    productIds: ["prod-02", "prod-04", "prod-09", "prod-10"],
+    image: "./products/sherwani-emerald-velvet.jpg",
+    productIds: ["prod-02", "prod-04", "prod-09", "prod-13"],
   },
   {
     number: "03",
     tag_en: "Behind the Seams • Warmth & Family",
     tag_bn: "কারিগরি গল্প • শাল ও পারিবারিক উৎসব",
-    title_en: "Double-Faced Cashmere & Family Looms",
-    title_bn: "রিভার্সিবল কাশ্মীরি ও উৎসবের সেট",
+    title_en: "Cashmere Wraps & Family Looms",
+    title_bn: "কাশ্মীরি শাল ও উৎসবের সেট",
     body_en:
-      "Created for crisp Dhaka mornings and festive family gatherings: double-sided cashmere shawls bordered in burgundy velvet alongside soft, breathable cotton-silk children's ensembles.",
+      "Created for crisp Dhaka mornings and festive family gatherings: soft brushed cashmere winter scarves alongside breathable cotton-silk children's ensembles.",
     body_bn:
-      "শীতের সকালের উষ্ণতার জন্য দুই পাশে ব্যবহারযোগ্য কাশ্মীরি শাল এবং ছোটদের জন্য আরামদায়ক কটন-সিল্ক ও ভেলভেট কোটি সেট।",
-    fabricNote_en: "70% Grade-A Cashmere • 100% Breathable Cotton-Silk Lining",
-    fabricNote_bn: "৭০% গ্রেড-এ কাশ্মীরি • ১০০% সুতি-সিল্ক আরামদায়ক লাইনিং",
+      "শীতের সকালের উষ্ণতার জন্য কোমল কাশ্মীরি শাল এবং ছোটদের জন্য আরামদায়ক কটন-সিল্ক ও ভেলভেট কোটি সেট।",
+    fabricNote_en: "80% Brushed Cashmere • 100% Breathable Cotton-Silk Lining",
+    fabricNote_bn: "৮০% ব্রাশড কাশ্মীরি • ১০০% সুতি-সিল্ক আরামদায়ক লাইনিং",
     image:
       "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&w=1200&q=85",
-    productIds: ["prod-05", "prod-06", "prod-14", "prod-15"],
+    productIds: ["prod-05", "prod-06", "prod-17", "prod-20"],
   },
 ];
 
@@ -74,7 +73,6 @@ export const LookbookPage: React.FC = () => {
 
   return (
     <div className="animate-fade-in">
-      {/* Header */}
       <div className="bg-[#24030B] text-[#FAF8F5] py-14 border-b border-[#C5A059]/30">
         <div className="container mx-auto px-4">
           <nav className="flex items-center gap-2 text-[11px] text-[#E6C87C]/80 mb-4 uppercase tracking-wider">
@@ -104,7 +102,6 @@ export const LookbookPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Editorial Chapters */}
       <div className="container mx-auto px-4 py-14 space-y-20">
         {STORIES.map((story, idx) => {
           const matchedProducts = story.productIds

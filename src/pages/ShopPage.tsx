@@ -25,7 +25,6 @@ export const ShopPage: React.FC = () => {
 
   return (
     <div className="animate-fade-in">
-      {/* Architectural Collection Header */}
       <div className="bg-[#F4EFE6] border-b border-[#ECE4D4] py-10">
         <div className="container mx-auto px-4">
           <nav className="flex items-center gap-2 text-[11px] text-stone-500 mb-4 uppercase tracking-wider">
@@ -67,7 +66,6 @@ export const ShopPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Full Catalog */}
       <ProductGrid showFilterToolbar={true} />
     </div>
   );

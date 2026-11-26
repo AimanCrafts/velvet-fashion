@@ -6,15 +6,17 @@ Velvet Fashion utilizes Supabase (PostgreSQL 15+) with Row-Level Security (RLS),
 
 ## 1. Schema Overview
 
-The database schema is organized across five sequential migrations located in `supabase/migrations/`:
+The database schema is organized across seven sequential migrations located in `supabase/migrations/`:
 
 | Migration | Purpose | Key Artifacts |
 | :--- | :--- | :--- |
-| `001_initial_schema.sql` | Core domain entities | `profiles`, `delivery_zones`, `products`, `product_variants`, `inventory_lots`, `orders`, `order_items`, `audit_logs`, `site_settings` |
-| `002_rls_and_policies.sql` | Access control & isolation | Row-Level Security enabled on all tables; `is_staff()` function; `product_variants_public` view |
-| `003_secure_order_rpc.sql` | Authoritative transactions | `create_order_secure`, `get_order_status_secure`, `update_order_status_admin`, `verify_order_payment_admin` |
-| `004_seed_data.sql` | Seed catalogue & zones | Bangladesh delivery zones (`dhaka_metro`, `nationwide_express`, etc.), initial catalog items, site settings |
-| `005_storage_buckets.sql` | Media storage & policies | `catalog`, `brand`, and `order-documents` storage buckets with staff-only write policies |
+| `20261119000001_initial_schema.sql` | Core domain entities | `profiles`, `delivery_zones`, `products`, `product_variants`, `inventory_lots`, `orders`, `order_items`, `audit_logs`, `site_settings` |
+| `20261119000002_rls_and_policies.sql` | Access control & isolation | Row-Level Security enabled on all tables; `is_staff()` function; `product_variants_public` view |
+| `20261119000003_secure_order_rpc.sql` | Authoritative transactions | `create_order_secure`, `get_order_status_secure`, `update_order_status_admin`, `verify_order_payment_admin` |
+| `20261119000004_seed_data.sql` | Core catalog & zones | Bangladesh delivery zones (`dhaka_metro`, `nationwide_express`, etc.), core catalog items, site settings |
+| `20261119000005_storage_buckets.sql` | Media storage & policies | `catalog`, `brand`, and `order-documents` storage buckets with staff-only write policies |
+| `20261126000006_secure_public_rpc_access.sql` | RPC privilege lockdown | Restricts `create_order_secure` & `get_order_status_secure` execution to `service_role` |
+| `20261127000007_expand_catalog_products.sql` | Seasonal catalog expansion | Inserts `prod-07` through `prod-20` with full size/color variants |
 
 ---
 

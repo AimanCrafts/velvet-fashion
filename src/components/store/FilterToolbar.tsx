@@ -47,7 +47,6 @@ export const FilterToolbar: React.FC<{ resultCount: number }> = ({ resultCount }
 
   return (
     <div className="bg-white border border-[#ECE4D4] p-4 mb-8 space-y-3.5">
-      {/* Row 1: Departments & Sort */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
           {audienceFilters.map((tab) => {
@@ -98,7 +97,6 @@ export const FilterToolbar: React.FC<{ resultCount: number }> = ({ resultCount }
         </div>
       </div>
 
-      {/* Row 2: Occasions, Quick Toggles & Clear */}
       <div className="pt-3 border-t border-[#F0EAE0] flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
           <span className="text-[10px] uppercase tracking-[0.18em] font-bold text-[#88652A] me-1 shrink-0">

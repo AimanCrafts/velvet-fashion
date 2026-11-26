@@ -16,7 +16,6 @@ export const formatBdt = (amount: number, lang: Language = 'en'): string => {
   return `৳ ${formattedEn}`;
 };
 
-// Backwards-compatible alias for existing components
 export const formatQar = (amount: number, lang: 'en' | 'bn' | 'ar' | string = 'en'): string => {
   return formatBdt(amount, lang === 'bn' ? 'bn' : 'en');
 };

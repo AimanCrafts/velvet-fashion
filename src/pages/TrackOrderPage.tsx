@@ -95,7 +95,6 @@ export const TrackOrderPage: React.FC = () => {
           </span>
         </div>
 
-        {/* Recent local/session orders quick access */}
         {orders.length > 0 && (
           <div className="pt-4 border-t border-[#ECE4D4] space-y-3">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500">

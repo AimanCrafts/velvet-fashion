@@ -9,7 +9,6 @@ export const BrandStory: React.FC = () => {
   return (
     <section className="container mx-auto px-4 py-14">
       <div className="bg-white border border-[#ECE4D4] grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
-        {/* Left Visual Story (5 cols) */}
         <div className="lg:col-span-5 relative min-h-[380px] bg-[#24030B]">
           <img
             src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=900&q=85"
@@ -35,7 +34,6 @@ export const BrandStory: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Narrative (7 cols) */}
         <div className="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-between space-y-6">
           <div className="space-y-4">
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#88652A] block">

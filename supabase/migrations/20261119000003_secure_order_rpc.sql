@@ -1,6 +1,3 @@
--- Order processing and administrative RPC procedures
-
--- 1. Order Creation Procedure
 CREATE OR REPLACE FUNCTION public.create_order_secure(
     p_customer_name TEXT,
     p_customer_phone TEXT,
@@ -41,7 +38,6 @@ DECLARE
     v_line_total NUMERIC(10, 2);
     v_existing_order RECORD;
 BEGIN
-    -- Check idempotency key
     IF p_idempotency_key IS NOT NULL AND length(trim(p_idempotency_key)) > 0 THEN
         SELECT * INTO v_existing_order 
         FROM public.orders 
@@ -62,26 +58,22 @@ BEGIN
         END IF;
     END IF;
 
-    -- Validate customer details
     v_clean_name := trim(p_customer_name);
     IF length(v_clean_name) < 2 OR length(v_clean_name) > 100 THEN
         RAISE EXCEPTION 'INVALID_NAME: Full name must be between 2 and 100 characters';
     END IF;
 
-    -- Validate Bangladesh Mobile Phone Syntax: (+88)?01[3-9]XXXXXXXX
     v_clean_phone := regexp_replace(p_customer_phone, '[\s\-()]', '', 'g');
     IF NOT v_clean_phone ~ '^(?:\+?88)?01[3-9][0-9]{8}$' THEN
         RAISE EXCEPTION 'INVALID_PHONE: Please provide a valid 11-digit Bangladesh mobile number';
     END IF;
 
-    -- Standardize phone to +880 1XXXXXXXXX
     IF substring(v_clean_phone from 1 for 2) = '88' THEN
         v_clean_phone := '+' || v_clean_phone;
     ELSIF substring(v_clean_phone from 1 for 1) = '0' THEN
         v_clean_phone := '+88' || v_clean_phone;
     END IF;
 
-    -- Clean optional alternate phone
     IF p_customer_alt_phone IS NOT NULL AND length(trim(p_customer_alt_phone)) > 0 THEN
         v_clean_alt_phone := regexp_replace(p_customer_alt_phone, '[\s\-()]', '', 'g');
         IF v_clean_alt_phone ~ '^(?:\+?88)?01[3-9][0-9]{8}$' THEN
@@ -110,13 +102,11 @@ BEGIN
         END IF;
     END IF;
 
-    -- Verify delivery zone
     SELECT * INTO v_zone FROM public.delivery_zones WHERE id = p_zone_id AND is_active = TRUE;
     IF NOT FOUND THEN
         RAISE EXCEPTION 'INVALID_ZONE: Selected delivery zone is not available';
     END IF;
 
-    -- Verify line items count
     IF p_items IS NULL OR jsonb_array_length(p_items) = 0 THEN
         RAISE EXCEPTION 'EMPTY_CART: Order must contain at least one item';
     END IF;
@@ -125,13 +115,11 @@ BEGIN
         RAISE EXCEPTION 'ORDER_LIMIT_EXCEEDED: Cannot order more than 20 distinct items at once';
     END IF;
 
-    -- Generate unique order number (VF-BD-XXXXXX with retry loop)
     LOOP
         v_order_number := 'VF-BD-' || upper(substring(encode(gen_random_bytes(4), 'hex') from 1 for 6));
         EXIT WHEN NOT EXISTS (SELECT 1 FROM public.orders WHERE order_number = v_order_number);
     END LOOP;
 
-    -- Temporary table to hold validated line items before insertion
     CREATE TEMPORARY TABLE temp_order_items (
         variant_id TEXT,
         product_name TEXT,
@@ -142,7 +130,6 @@ BEGIN
         total_price_bdt NUMERIC(10, 2)
     ) ON COMMIT DROP;
 
-    -- Validate items, lock variants, and calculate subtotal
     FOR v_item IN SELECT * FROM jsonb_to_recordset(p_items) AS x(variant_id TEXT, quantity INTEGER)
     LOOP
         IF v_item.quantity <= 0 OR v_item.quantity > 10 THEN
@@ -193,7 +180,6 @@ BEGIN
         );
     END LOOP;
 
-    -- Calculate delivery fee and total
     IF v_subtotal >= v_zone.free_above_bdt THEN
         v_delivery_fee := 0;
     ELSE
@@ -202,7 +188,6 @@ BEGIN
 
     v_total := v_subtotal + v_delivery_fee;
 
-    -- Create order record
     INSERT INTO public.orders (
         id,
         order_number,
@@ -249,7 +234,6 @@ BEGIN
         p_user_agent
     );
 
-    -- Insert order items
     INSERT INTO public.order_items (
         order_id,
         variant_id,
@@ -271,7 +255,6 @@ BEGIN
         total_price_bdt
     FROM temp_order_items;
 
-    -- Record audit log
     INSERT INTO public.audit_logs (
         action,
         entity_type,
@@ -304,7 +287,6 @@ BEGIN
 END;
 $$;
 
--- 2. Customer Order Status Tracking
 CREATE OR REPLACE FUNCTION public.get_order_status_secure(
     p_lookup_token TEXT,
     p_phone_last4 TEXT DEFAULT NULL
@@ -364,7 +346,6 @@ BEGIN
     FROM public.order_items
     WHERE order_id = v_order.id;
 
-    -- Mask sensitive phone and address details for customer view
     v_masked_phone := overlay(v_order.customer_phone placing '******' from 6 for 6);
     v_masked_address := split_part(v_order.address, ' ', 1) || ' •••••• ' || COALESCE(v_zone.name_en, 'Bangladesh');
 
@@ -391,7 +372,6 @@ BEGIN
 END;
 $$;
 
--- 3. Staff Order Status Management
 CREATE OR REPLACE FUNCTION public.update_order_status_admin(
     p_order_id UUID,
     p_new_status TEXT,
@@ -421,7 +401,6 @@ BEGIN
         RAISE EXCEPTION 'NOT_FOUND: Order % does not exist', p_order_id;
     END IF;
 
-    -- Ensure bKash/Nagad payments are verified before fulfillment
     IF p_new_status IN ('packed', 'out_for_delivery', 'delivered') 
        AND v_order.payment_method IN ('bkash', 'nagad') 
        AND v_order.payment_status <> 'verified' THEN
@@ -459,7 +438,6 @@ BEGIN
 END;
 $$;
 
--- 4. Staff Payment Reconciliation
 CREATE OR REPLACE FUNCTION public.verify_order_payment_admin(
     p_order_id UUID,
     p_notes TEXT DEFAULT NULL
@@ -566,4 +544,3 @@ BEGIN
     );
 END;
 $$;
-

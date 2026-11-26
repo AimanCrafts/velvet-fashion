@@ -30,7 +30,6 @@ export const SizeGuideModal: React.FC<{
         aria-hidden="true"
       />
       <div className="relative w-full max-w-xl bg-white rounded-2xl border border-[#ECE4D4] shadow-2xl overflow-hidden z-10">
-        {/* Header */}
         <div className="p-5 border-b border-[#ECE4D4] flex items-center justify-between bg-[#FAF8F5]">
           <div className="flex items-center gap-2">
             <Ruler className="w-5 h-5 text-[#88652A]" />
@@ -53,7 +52,6 @@ export const SizeGuideModal: React.FC<{
           </button>
         </div>
 
-        {/* Content */}
         <div className="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-xs text-stone-700">
           <p className="text-stone-600 leading-relaxed">
             {isBn
@@ -61,7 +59,6 @@ export const SizeGuideModal: React.FC<{
               : "All garments are tailored to ensure graceful drape and true-to-size comfort for festive and formal occasions."}
           </p>
 
-          {/* Table */}
           <div className="overflow-x-auto rounded-xl border border-[#ECE4D4]">
             <table className="w-full text-center border-collapse">
               <thead>
@@ -130,7 +127,6 @@ export const SizeGuideModal: React.FC<{
           </div>
         </div>
 
-        {/* Footer */}
         <div className="p-4 border-t border-[#ECE4D4] bg-[#FAF8F5] flex justify-end">
           <button
             onClick={onClose}

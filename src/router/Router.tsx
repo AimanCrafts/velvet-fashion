@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 export type RouteContextType = {
-  path: string; // e.g. "/product/prod-01"
-  segments: string[]; // e.g. ["product", "prod-01"]
+  path: string;
+  segments: string[];
   navigate: (to: string) => void;
 };
 
@@ -68,4 +68,3 @@ export const Link: React.FC<
     </a>
   );
 };
-

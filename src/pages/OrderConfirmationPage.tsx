@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useRouter, Link } from "../../router/Router";
-import { useStore } from "../../context/StoreContext";
-import { formatBdt, buildWhatsAppUrl } from "../../utils/formatters";
-import { isSafeUrl } from "../../utils/security";
+import { useRouter, Link } from "../router/Router";
+import { useStore } from "../context/StoreContext";
+import { formatBdt, buildWhatsAppUrl } from "../utils/formatters";
+import { isSafeUrl } from "../utils/security";
 import {
   isSupabaseConfigured,
   getOrderStatusRemote,
   type RemoteOrderStatus,
-} from "../../services/supabaseClient";
+} from "../services/supabaseClient";
 import {
   CheckCircle2,
   MessageCircle,
@@ -23,7 +23,7 @@ import {
 
 export const OrderConfirmationPage: React.FC = () => {
   const { segments } = useRouter();
-  const orderId = segments[1]; // /order/:id
+  const orderId = segments[1];
 
   const { orders, lastPlacedOrder, isBn, siteSettings } = useStore();
 
@@ -52,7 +52,6 @@ export const OrderConfirmationPage: React.FC = () => {
           }
         })
         .catch(() => {
-          // not found or token invalid
         })
         .finally(() => {
           if (isMounted) {
@@ -79,7 +78,6 @@ export const OrderConfirmationPage: React.FC = () => {
     );
   }
 
-  // Combined order representation
   const order =
     localOrder ||
     (remoteOrder && remoteOrder.found
@@ -155,7 +153,6 @@ export const OrderConfirmationPage: React.FC = () => {
   return (
     <>
       <div className="container mx-auto px-4 py-10 md:py-16 max-w-3xl animate-fade-in print:hidden">
-        {/* Celebration Header */}
         <div className="bg-white rounded-3xl border border-[#ECE4D4] p-8 md:p-10 shadow-sm text-center mb-8">
           <div className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mx-auto mb-4">
             <CheckCircle2 className="w-8 h-8" />
@@ -179,7 +176,6 @@ export const OrderConfirmationPage: React.FC = () => {
               : `Your luxury package #${order.id} is being tailored & packed. Our courier will contact you upon dispatch.`}
           </p>
 
-          {/* Action CTAs */}
           <div className="flex flex-wrap items-center justify-center gap-3">
             <a
               href={waUrl}
@@ -208,7 +204,6 @@ export const OrderConfirmationPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Delivery Progress Steps */}
         <div className="bg-[#FAF8F5] rounded-2xl border border-[#ECE4D4] p-6 mb-8">
           <h3 className="font-['Playfair_Display'] text-sm font-bold text-[#24030B] mb-4">
             {isBn
@@ -258,7 +253,6 @@ export const OrderConfirmationPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Order Details & Summary Card */}
         <div className="bg-white rounded-2xl border border-[#ECE4D4] p-6 shadow-sm space-y-6">
           <div className="flex items-center justify-between pb-4 border-b border-[#ECE4D4]">
             <div>
@@ -278,7 +272,6 @@ export const OrderConfirmationPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Address and Slot details */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-stone-700">
             <div className="space-y-1">
               <div className="flex items-center gap-1.5 text-stone-500 font-semibold">
@@ -304,7 +297,6 @@ export const OrderConfirmationPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Items List */}
           <div className="pt-4 border-t border-[#ECE4D4]">
             <h4 className="font-bold text-xs text-stone-900 mb-3 flex items-center gap-1.5">
               <ShoppingBag className="w-3.5 h-3.5 text-[#88652A]" />
@@ -337,7 +329,6 @@ export const OrderConfirmationPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Totals */}
           <div className="pt-4 border-t border-[#ECE4D4] space-y-2 text-xs">
             <div className="flex justify-between text-stone-600">
               <span>{isBn ? "সাবটোটাল:" : "Subtotal:"}</span>
@@ -369,7 +360,6 @@ export const OrderConfirmationPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Policy Notice */}
           <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#ECE4D4] flex items-center gap-2.5 text-[11px] text-stone-600">
             <ShieldCheck className="w-4 h-4 text-[#88652A] shrink-0" />
             <span>
@@ -380,7 +370,6 @@ export const OrderConfirmationPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Return to Shop CTA */}
         <div className="text-center mt-8">
           <Link
             to="/shop"
@@ -392,7 +381,6 @@ export const OrderConfirmationPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Print View */}
       <div className="hidden print:block print:w-full print:p-8 font-sans text-stone-900 bg-white">
         <div className="border-b-2 border-[#3E0713] pb-4 mb-6 flex justify-between items-start">
           <div>

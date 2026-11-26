@@ -1,6 +1,3 @@
-/**
- * Velvet Fashion — Functional & Schema Verification Suite
- */
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,9 +19,6 @@ console.log('================================================================');
 console.log('VELVET FASHION — SYSTEM VERIFICATION SUITE');
 console.log('================================================================\n');
 
-// -----------------------------------------------------------------------------
-// SUITE 1: Client Data Hygiene & Security Functions
-// -----------------------------------------------------------------------------
 console.log('--- SUITE 1: Security Utilities & Sanitization ---');
 
 const HTML_ESCAPE_MAP = {
@@ -105,9 +99,6 @@ assert(isSafeUrl('javascript:alert(document.cookie)') === false, 'isSafeUrl stri
 assert(isSafeUrl('data:text/html,<script>alert(1)</script>') === false, 'isSafeUrl strictly blocks data: URI protocol');
 assert(maskPhone('+880 1712-345678') === '+880 17****78', 'maskPhone cloaks customer mobile number correctly');
 
-// -----------------------------------------------------------------------------
-// SUITE 2: PostgreSQL Schema & Procedure Integrity
-// -----------------------------------------------------------------------------
 console.log('\n--- SUITE 2: Database Schema & Migration Contracts ---');
 
 const migrationsDir = path.resolve('supabase/migrations');
@@ -119,6 +110,7 @@ const schemaSql = fs.readFileSync(path.join(migrationsDir, '20261119000001_initi
 const rlsSql = fs.readFileSync(path.join(migrationsDir, '20261119000002_rls_and_policies.sql'), 'utf-8');
 const rpcSql = fs.readFileSync(path.join(migrationsDir, '20261119000003_secure_order_rpc.sql'), 'utf-8');
 const seedSql = fs.readFileSync(path.join(migrationsDir, '20261119000004_seed_data.sql'), 'utf-8');
+const expandSeedSql = fs.readFileSync(path.join(migrationsDir, '20261127000007_expand_catalog_products.sql'), 'utf-8');
 const storageSql = fs.readFileSync(path.join(migrationsDir, '20261119000005_storage_buckets.sql'), 'utf-8');
 
 assert(schemaSql.includes('lookup_token TEXT UNIQUE NOT NULL'), 'orders table defines cryptographic lookup_token column');
@@ -143,9 +135,6 @@ assert(rpcSql.includes('PAYMENT_UNVERIFIED'), 'update_order_status_admin enforce
 assert(seedSql.includes('nationwide_express'), 'Seed data defines nationwide_express delivery zone');
 assert(storageSql.includes("bucket_id IN ('catalog', 'brand')"), 'Storage bucket RLS policies configured');
 
-// -----------------------------------------------------------------------------
-// SUITE 3: Edge Security Headers & Routing (_headers, _redirects)
-// -----------------------------------------------------------------------------
 console.log('\n--- SUITE 3: Cloudflare Pages Edge Security Headers & Routing ---');
 
 const headersContent = fs.readFileSync(path.resolve('public/_headers'), 'utf-8');
@@ -161,15 +150,13 @@ assert(fs.existsSync(redirectsPath), 'public/_redirects exists for Cloudflare Pa
 const redirectsContent = fs.readFileSync(redirectsPath, 'utf-8');
 assert(redirectsContent.includes('/* /index.html 200'), 'public/_redirects routes all paths to /index.html with status 200');
 
-// Parity Check: mockData vs Seed Data
-const mockDataContent = fs.readFileSync(path.resolve('src/data/mockData.ts'), 'utf-8');
-assert(mockDataContent.includes('nationwide_express'), 'mockData.ts and seed_data.sql share 100% zone parity (nationwide_express)');
-assert(mockDataContent.includes('v-01-xl-burg') && seedSql.includes('v-01-xl-burg'), 'mockData.ts and seed_data.sql share variant v-01-xl-burg parity');
-assert(mockDataContent.includes('v-03-free-navy') && seedSql.includes('v-03-free-navy'), 'mockData.ts and seed_data.sql share variant v-03-free-navy parity');
+const storeDataContent = fs.readFileSync(path.resolve('src/data/storeData.ts'), 'utf-8');
+const catalogDataContent = fs.readFileSync(path.resolve('src/data/catalog.ts'), 'utf-8');
+assert(storeDataContent.includes('nationwide_express'), 'storeData.ts and seed_data.sql share zone parity (nationwide_express)');
+assert(storeDataContent.includes('v-01-xl-burg') && seedSql.includes('v-01-xl-burg'), 'storeData.ts and seed_data.sql share variant v-01-xl-burg parity');
+assert(storeDataContent.includes('v-03-free-navy') && seedSql.includes('v-03-free-navy'), 'storeData.ts and seed_data.sql share variant v-03-free-navy parity');
+assert(catalogDataContent.includes('prod-20') && expandSeedSql.includes('prod-20'), 'catalog.ts and 20261127000007_expand_catalog_products.sql share expanded catalog parity');
 
-// -----------------------------------------------------------------------------
-// SUITE 4: Secret Leak & Compliance Scan
-// -----------------------------------------------------------------------------
 console.log('\n--- SUITE 4: Zero Secrets & Compliance Scan ---');
 
 function searchDirectory(dir, pattern) {
@@ -201,9 +188,6 @@ if (fs.existsSync(distDir)) {
 const fakeIdMatches = searchDirectory('src', /042188|08149|e-CAB Member #1842/);
 assert(fakeIdMatches.length === 0, 'Zero occurrences of fabricated registration numbers in src/', fakeIdMatches.join(', '));
 
-// -----------------------------------------------------------------------------
-// SUITE 5: Link Safety & Reverse Tabnabbing Verification
-// -----------------------------------------------------------------------------
 console.log('\n--- SUITE 5: Reverse Tabnabbing & Error Boundary ---');
 
 function checkExternalLinks(dir) {
@@ -232,9 +216,6 @@ assert(tabnabbingViolations.length === 0, '100% of target="_blank" links include
 const appTsx = fs.readFileSync(path.resolve('src/App.tsx'), 'utf-8');
 assert(appTsx.includes('<ErrorBoundary>'), 'App.tsx wraps Storefront in production ErrorBoundary');
 
-// -----------------------------------------------------------------------------
-// SUMMARY
-// -----------------------------------------------------------------------------
 console.log('\n================================================================');
 console.log(`VERIFICATION SUMMARY: ${passed} PASSED, ${failed} FAILED`);
 console.log('================================================================');

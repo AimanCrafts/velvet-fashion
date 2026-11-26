@@ -78,7 +78,6 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-fade-in">
       <div className="relative bg-[#FAF8F5] max-w-4xl w-full border border-[#ECE4D4] shadow-2xl overflow-hidden my-4">
-        {/* Close Button */}
         <button
           onClick={() => setSelectedProductForQuickView(null)}
           className="absolute top-4 end-4 z-20 bg-white/90 hover:bg-white text-stone-800 p-1.5 border border-[#ECE4D4] shadow-sm transition"
@@ -88,7 +87,6 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-12">
-          {/* Left Column (5 cols): Photo & Gallery */}
           <div className="md:col-span-5 bg-[#F4EFE6] p-4 flex flex-col justify-between">
             <div className="relative aspect-[3/4] overflow-hidden border border-[#ECE4D4] bg-white">
               <img
@@ -106,7 +104,6 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
               </div>
             </div>
 
-            {/* Gallery Thumbnails (if multiple images) */}
             {galleryImages.length > 1 && (
               <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
                 {galleryImages.map((imgUrl, i) => (
@@ -126,7 +123,6 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
             )}
           </div>
 
-          {/* Right Column (7 cols): Information, Specs & Actions */}
           <div className="md:col-span-7 p-6 flex flex-col justify-between space-y-4">
             <div>
               <div className="flex items-center justify-between text-[11px] text-[#A8813B] uppercase tracking-wider mb-1 font-semibold">
@@ -138,7 +134,6 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
                 {isBn ? product.name_bn : product.name_en}
               </h2>
 
-              {/* Price & Delivery Badge */}
               <div className="mt-2 flex items-baseline gap-2">
                 <span className="text-2xl font-bold text-[#3E0713] font-['Plus_Jakarta_Sans']">
                   {formatBdt(currentPrice, isBn ? "bn" : "en")}
@@ -148,7 +143,6 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
                 </span>
               </div>
 
-              {/* Specification Tabs */}
               <div className="mt-4 border-b border-[#ECE4D4] flex gap-4 text-xs font-semibold">
                 <button
                   onClick={() => setActiveTab("fabric")}
@@ -185,7 +179,6 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
                 </button>
               </div>
 
-              {/* Tab Content Display */}
               <div className="py-3 text-xs text-stone-600 min-h-[90px]">
                 {activeTab === "fabric" && (
                   <div className="space-y-1.5">
@@ -245,7 +238,6 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
                 )}
               </div>
 
-              {/* Color Swatches */}
               <div className="space-y-2 pt-2 border-t border-[#ECE4D4]">
                 <div className="flex items-center justify-between text-xs font-semibold text-stone-800">
                   <span>{isBn ? "রং:" : "Color:"} <strong className="text-[#3E0713]">{selectedVariant.color}</strong></span>
@@ -269,7 +261,6 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
                 </div>
               </div>
 
-              {/* Sizes Selection */}
               <div className="space-y-2 pt-2">
                 <span className="text-xs font-semibold text-stone-800 block">
                   {isBn ? "উপলব্ধ সাইজ:" : "Available Sizes:"}
@@ -295,7 +286,6 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
                 </div>
               </div>
 
-              {/* Stock Status Indicator */}
               <div className="pt-2 text-xs">
                 {selectedVariant.stockQty <= 0 ? (
                   <span className="text-red-600 font-semibold">{isBn ? "স্টক শেষ হয়ে গেছে" : "Sold Out in Warehouse"}</span>
@@ -307,7 +297,6 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
               </div>
             </div>
 
-            {/* Actions: Add to Bag + Full Details + WhatsApp Concierge */}
             <div className="pt-3 border-t border-[#ECE4D4] space-y-2.5">
               <div className="flex items-center gap-2">
                 <div className="flex items-center border border-[#DDD1BC] bg-white px-2 py-1.5">

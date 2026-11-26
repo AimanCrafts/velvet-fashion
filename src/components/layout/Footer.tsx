@@ -18,7 +18,6 @@ export const Footer: React.FC = () => {
     <footer className="print:hidden bg-[#1B0208] text-[#FAF8F5] pt-16 pb-8 border-t border-[#C5A059]/35 mt-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/10">
-          {/* Col 1: Brand Info (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
               <img
@@ -59,7 +58,6 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Col 2: Quick Navigation (2 cols) */}
           <div className="lg:col-span-2 space-y-3">
             <h4 className="font-['Cinzel'] text-xs font-bold uppercase tracking-wider text-[#E6C87C]">
               {isBn ? "কেনাকাটা" : "Atelier"}
@@ -107,7 +105,6 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 3: Dispatch & Policy (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="font-['Cinzel'] text-xs font-bold uppercase tracking-wider text-[#E6C87C]">
               {isBn ? "ডেলিভারি ও নীতিমালা" : "Dispatch & Policy"}
@@ -130,7 +127,6 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Col 4: Regulatory Licensing (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="font-['Cinzel'] text-xs font-bold uppercase tracking-wider text-[#E6C87C] flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-[#C5A059]" />
@@ -174,7 +170,6 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#ECE4D4]/70">
           <div>
             © {new Date().getFullYear()} Velvet Fashion Ltd. (Dhaka, Bangladesh). All rights reserved.

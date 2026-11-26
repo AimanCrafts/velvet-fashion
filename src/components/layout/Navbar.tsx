@@ -57,7 +57,7 @@ const MEGA_MENUS: Record<"women" | "men", MegaMenuData> = {
       title_bn: "ইম্পেরিয়াল বার্গান্ডি কাফতান",
       subtitle_en: "Hand-worked metallic zardozi",
       subtitle_bn: "হাতের নিখুঁত জারদৌসি কাজ",
-      imageUrl: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=600&q=80",
+      imageUrl: "./products/kaftan-burgundy-velvet.jpg",
     },
   },
   men: {
@@ -82,7 +82,7 @@ const MEGA_MENUS: Record<"women" | "men", MegaMenuData> = {
       title_bn: "এমারেল্ড সভরেন শেরওয়ানি",
       subtitle_en: "Heavy velvet with antiqued brass",
       subtitle_bn: "অ্যান্টিক পিতলের বোতামে সজ্জিত",
-      imageUrl: "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=600&q=80",
+      imageUrl: "./products/sherwani-emerald-velvet.jpg",
     },
   },
 };
@@ -224,7 +224,6 @@ export const Navbar: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => 
       className="sticky top-0 z-40 print:hidden bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#ECE4D4]"
       onMouseLeave={() => setOpenMega(null)}
     >
-      {/* Top Editorial Utility Bar */}
       <div className="bg-[#24030B] text-[#F4E2B5] px-4 py-1.5 text-[11px] tracking-wider">
         <div className="container mx-auto flex items-center justify-between gap-4">
           <span className="truncate font-medium">
@@ -259,9 +258,7 @@ export const Navbar: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => 
         </div>
       </div>
 
-      {/* Main 3-Zone Architectural Header */}
       <div className="container mx-auto px-4 h-16 lg:h-[72px] flex items-center justify-between gap-4">
-        {/* Left: Mobile Trigger + Primary Collection Links */}
         <div className="flex items-center gap-6 flex-1 min-w-0">
           <button
             onClick={() => setMobileMenuOpen((v) => !v)}
@@ -326,7 +323,6 @@ export const Navbar: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => 
           </nav>
         </div>
 
-        {/* Center: Brand Wordmark & Crest */}
         <Link
           to="/"
           className="flex items-center gap-2.5 select-none group shrink-0"
@@ -350,7 +346,6 @@ export const Navbar: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => 
           </div>
         </Link>
 
-        {/* Right: Predictive Search, Wishlist & Bag */}
         <div className="flex items-center justify-end gap-2 sm:gap-3 flex-1 min-w-0">
           <Link
             to="/shop"
@@ -406,7 +401,6 @@ export const Navbar: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => 
         </div>
       </div>
 
-      {/* Desktop Mega-Menu Panel (Ströms-inspired structured navigation) */}
       {openMega && (
         <div className="hidden lg:block absolute inset-x-0 top-full bg-[#FAF8F5] border-b border-[#ECE4D4] shadow-xl z-40 animate-fade-in">
           <div className="container mx-auto px-4 py-8 grid grid-cols-12 gap-8">
@@ -510,7 +504,6 @@ export const Navbar: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => 
         </div>
       )}
 
-      {/* Predictive Search Panel (Atticus Finch inspired) */}
       {searchOpen && (
         <div
           ref={searchPanelRef}
@@ -622,7 +615,6 @@ export const Navbar: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => 
         </div>
       )}
 
-      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-[#ECE4D4] bg-white px-4 py-5 space-y-4 animate-fade-in">
           <div className="grid grid-cols-2 gap-2 text-xs font-semibold">

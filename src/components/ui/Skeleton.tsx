@@ -8,4 +8,3 @@ export const Skeleton: React.FC<{ className?: string }> = ({ className = "" }) =
     <div className="mt-2 h-3 w-1/4 bg-[#ECE4D4] rounded" />
   </div>
 );
-

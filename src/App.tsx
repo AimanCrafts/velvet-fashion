@@ -6,51 +6,28 @@ import { HomePage } from "./pages/HomePage";
 import { ShopPage } from "./pages/ShopPage";
 import { LookbookPage } from "./pages/LookbookPage";
 import { TrackOrderPage } from "./pages/TrackOrderPage";
+import { ProductDetailPage } from "./pages/ProductDetailPage";
+import { CheckoutPage } from "./pages/CheckoutPage";
+import { OrderConfirmationPage } from "./pages/OrderConfirmationPage";
+import { AdminPage } from "./pages/AdminPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
-import { ProductDetailPage } from "./components/product/ProductDetailPage";
-import { CheckoutPage } from "./components/checkout/CheckoutPage";
-import { OrderConfirmationPage } from "./components/checkout/OrderConfirmationPage";
-import { AdminPage } from "./components/admin/AdminPage";
 import { CartDrawer } from "./components/checkout/CartDrawer";
 import { ProductQuickViewModal } from "./components/store/ProductQuickViewModal";
-import { DesignSystemModal } from "./components/guidelines/DesignSystemModal";
+import { AtelierStandardsModal } from "./components/store/AtelierStandardsModal";
 import { Toast } from "./components/ui/Toast";
 import { ErrorBoundary } from "./components/ui/ErrorBoundary";
 
 function AppRoutes() {
   const { path } = useRouter();
 
-  if (path === "/" || path === "") {
-    return <HomePage />;
-  }
-
-  if (path === "/shop") {
-    return <ShopPage />;
-  }
-
-  if (path === "/lookbook") {
-    return <LookbookPage />;
-  }
-
-  if (path === "/track") {
-    return <TrackOrderPage />;
-  }
-
-  if (path.startsWith("/product/")) {
-    return <ProductDetailPage />;
-  }
-
-  if (path === "/checkout") {
-    return <CheckoutPage />;
-  }
-
-  if (path.startsWith("/order/")) {
-    return <OrderConfirmationPage />;
-  }
-
-  if (path === "/admin") {
-    return <AdminPage />;
-  }
+  if (path === "/" || path === "") return <HomePage />;
+  if (path === "/shop") return <ShopPage />;
+  if (path === "/lookbook") return <LookbookPage />;
+  if (path === "/track") return <TrackOrderPage />;
+  if (path.startsWith("/product/")) return <ProductDetailPage />;
+  if (path === "/checkout") return <CheckoutPage />;
+  if (path.startsWith("/order/")) return <OrderConfirmationPage />;
+  if (path === "/admin") return <AdminPage />;
 
   return <NotFoundPage />;
 }
@@ -73,7 +50,7 @@ function StorefrontShell() {
 
       <CartDrawer />
       <ProductQuickViewModal />
-      <DesignSystemModal />
+      <AtelierStandardsModal />
 
       {!isAdmin && !isCheckout && <Footer />}
     </div>

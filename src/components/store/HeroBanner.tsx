@@ -73,7 +73,7 @@ const SLIDES: HeroSlide[] = [
     targetAudience: "men",
     targetOccasion: "festive",
     bgImage:
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1600&q=85",
+      "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=1600&q=85",
     featureProductId: "prod-04",
     featureTag_en: "02 / Sovereign Cut",
     featureTag_bn: "০২ / সভরেন শেরওয়ানি",
@@ -97,8 +97,8 @@ const SLIDES: HeroSlide[] = [
     bgImage:
       "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&w=1600&q=85",
     featureProductId: "prod-06",
-    featureTag_en: "03 / Reversible Wrap",
-    featureTag_bn: "০৩ / রিভার্সিবল শাল",
+    featureTag_en: "03 / Cashmere Wrap",
+    featureTag_bn: "০৩ / কাশ্মীরি শাল",
   },
 ];
 
@@ -135,9 +135,7 @@ export const HeroBanner: React.FC = () => {
 
   return (
     <section className="relative overflow-hidden">
-      {/* Full-Bleed Architectural Campaign Hero */}
       <div className="relative bg-[#1B0208] text-[#FAF8F5] min-h-[540px] lg:min-h-[620px] flex items-center">
-        {/* Background Media */}
         <div className="absolute inset-0 z-0">
           <img
             key={currentSlide.id}
@@ -148,10 +146,8 @@ export const HeroBanner: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-[#1A0208] via-[#24030B]/90 to-[#1A0208]/60" />
         </div>
 
-        {/* Content Grid */}
         <div className="container mx-auto px-4 py-14 lg:py-20 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Editorial Copy (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
               <div className="flex items-center gap-3 text-xs uppercase tracking-[0.26em] text-[#E6C87C] font-semibold">
                 <span className="w-8 h-[1px] bg-[#C5A059]" />
@@ -196,7 +192,6 @@ export const HeroBanner: React.FC = () => {
                 </Link>
               </div>
 
-              {/* Slide Controls */}
               <div className="flex items-center gap-4 pt-4">
                 <div className="flex items-center gap-2">
                   {SLIDES.map((s, idx) => (
@@ -235,7 +230,6 @@ export const HeroBanner: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Column: Spotlight Garment Editorial Card (5 cols) */}
             {featuredProduct && (
               <div className="lg:col-span-5 hidden lg:flex justify-end">
                 <Link
@@ -272,7 +266,6 @@ export const HeroBanner: React.FC = () => {
         </div>
       </div>
 
-      {/* Crisp 4-Pillar Service Bar */}
       <div className="bg-white border-b border-[#ECE4D4] py-4">
         <div className="container mx-auto px-4 grid grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
           <div className="flex items-center gap-3">

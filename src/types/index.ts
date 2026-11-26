@@ -11,7 +11,7 @@ export interface ProductVariant {
   color: string;
   colorHex: string;
   priceBdt: number;
-  priceQar?: number; // legacy alias
+  priceQar?: number;
   stockQty: number;
 }
 
@@ -19,17 +19,17 @@ export interface Product {
   id: string;
   name_en: string;
   name_bn: string;
-  name_ar?: string; // legacy alias
+  name_ar?: string;
   description_en: string;
   description_bn: string;
-  description_ar?: string; // legacy alias
+  description_ar?: string;
   audience: Audience;
   category: string;
   category_bn: string;
-  category_ar?: string; // legacy alias
+  category_ar?: string;
   collection: string;
   collection_bn: string;
-  collection_ar?: string; // legacy alias
+  collection_ar?: string;
   imageUrl: string;
   additionalImages?: string[];
   status: 'live' | 'draft' | 'archived';
@@ -38,7 +38,7 @@ export interface Product {
   newArrival?: boolean;
   fabric_en: string;
   fabric_bn: string;
-  fabric_ar?: string; // legacy alias
+  fabric_ar?: string;
   occasions?: Exclude<OccasionFilter, 'all'>[];
   editorialNote_en?: string;
   editorialNote_bn?: string;
@@ -54,14 +54,14 @@ export interface DeliveryZone {
   id: string;
   name_en: string;
   name_bn: string;
-  name_ar?: string; // legacy alias
+  name_ar?: string;
   feeBdt: number;
-  feeQar?: number; // legacy alias
+  feeQar?: number;
   eta_en: string;
   eta_bn: string;
-  eta_ar?: string; // legacy alias
+  eta_ar?: string;
   freeAboveBdt: number;
-  freeAboveQar?: number; // legacy alias
+  freeAboveQar?: number;
 }
 
 export interface OrderItem {
@@ -72,7 +72,7 @@ export interface OrderItem {
   color: string;
   quantity: number;
   unitPriceBdt: number;
-  unitPriceQar?: number; // legacy alias
+  unitPriceQar?: number;
 }
 
 export type OrderStatus =
@@ -93,20 +93,20 @@ export interface Order {
   customerEmail: string;
   zone: string;
   zone_bn: string;
-  zone_ar?: string; // legacy alias
+  zone_ar?: string;
   address: string;
   timeSlot: string;
   paymentMethod: PaymentMethod;
   paymentTrxId?: string;
   items: OrderItem[];
   subtotalBdt: number;
-  subtotalQar?: number; // legacy alias
+  subtotalQar?: number;
   deliveryFeeBdt: number;
-  deliveryFeeQar?: number; // legacy alias
+  deliveryFeeQar?: number;
   discountBdt: number;
-  discountQar?: number; // legacy alias
+  discountQar?: number;
   totalBdt: number;
-  totalQar?: number; // legacy alias
+  totalQar?: number;
   status: OrderStatus;
   createdAt: string;
   orderNotes?: string;
@@ -118,7 +118,7 @@ export interface LotRecord {
   supplierName: string;
   receivedDate: string;
   totalCostBdt: number;
-  totalCostQar?: number; // legacy alias
+  totalCostQar?: number;
   totalItemsReceived: number;
   notes: string;
   items: {
@@ -129,21 +129,21 @@ export interface LotRecord {
     qtyReceived: number;
     unitCostBdt: number;
     retailPriceBdt: number;
-    unitCostQar?: number; // legacy alias
-    retailPriceQar?: number; // legacy alias
+    unitCostQar?: number;
+    retailPriceQar?: number;
   }[];
 }
 
 export interface SiteSettings {
   shopName_en: string;
   shopName_bn: string;
-  shopName_ar?: string; // legacy alias
+  shopName_ar?: string;
   tradeLicenseNo: string;
   dbidNo: string;
   ecabMemberNo: string;
   tinBinNo: string;
-  commercialRegistrationNo?: string; // legacy alias
-  ecommerceLicenseNo?: string; // legacy alias
+  commercialRegistrationNo?: string;
+  ecommerceLicenseNo?: string;
   supportPhone: string;
   supportWhatsApp: string;
   supportEmail: string;
@@ -151,8 +151,8 @@ export interface SiteSettings {
   nagadMerchantNumber: string;
   deliveryPromise_en: string;
   deliveryPromise_bn: string;
-  deliveryPromise_ar?: string; // legacy alias
+  deliveryPromise_ar?: string;
   returnPolicy_en: string;
   returnPolicy_bn: string;
-  returnPolicy_ar?: string; // legacy alias
+  returnPolicy_ar?: string;
 }

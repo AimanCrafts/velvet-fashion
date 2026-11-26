@@ -1,5 +1,3 @@
-// Velvet Fashion — Secure Order Creation Edge Function
-// Runtime: Supabase Edge Functions (Deno)
 
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0";
@@ -21,7 +19,6 @@ function corsHeaders(origin: string | null): Record<string, string> {
   };
 }
 
-// Rate limiting cache (IP and phone) in edge memory
 const rateLimitMap = new Map<string, number[]>();
 
 function checkEdgeRateLimit(key: string, limit: number, windowMs: number): boolean {
@@ -36,7 +33,7 @@ function checkEdgeRateLimit(key: string, limit: number, windowMs: number): boole
   const valid = history.filter((ts) => now - ts < windowMs);
   
   if (valid.length >= limit) {
-    return false; // throttled
+    return false;
   }
 
   valid.push(now);
@@ -67,7 +64,6 @@ async function readJsonLimited(req: Request, maxBytes: number): Promise<unknown>
 
 serve(async (req: Request) => {
   const headers = corsHeaders(req.headers.get("origin"));
-  // 1. Handle CORS preflight
   if (req.method === "OPTIONS") {
     return new Response(null, { status: 204, headers });
   }
@@ -87,7 +83,6 @@ serve(async (req: Request) => {
     const clientIp = req.headers.get("cf-connecting-ip") || req.headers.get("x-real-ip") || "unknown";
     const userAgent = req.headers.get("user-agent") || "unknown";
 
-    // 2. Server-Side Edge Rate Limiting (5 order requests per 10 minutes per IP)
     const isAllowed = checkEdgeRateLimit(`order_${clientIp}`, 5, 600000);
     if (!isAllowed) {
       return new Response(
@@ -106,7 +101,6 @@ serve(async (req: Request) => {
     if (contentLength > 32768) return new Response(JSON.stringify({ error: "Request too large" }), { status: 413, headers });
     const payload = await readJsonLimited(req, 32768) as Record<string, unknown>;
 
-    // 3. Basic Input Hygiene
     if (!payload || typeof payload !== "object" || Array.isArray(payload) ||
         typeof payload.customer_name !== "string" || payload.customer_name.length > 100 ||
         typeof payload.customer_phone !== "string" || payload.customer_phone.length > 24 ||
@@ -121,7 +115,6 @@ serve(async (req: Request) => {
       );
     }
 
-    // 4. Initialize Supabase Admin Client
     const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
 
@@ -134,7 +127,6 @@ serve(async (req: Request) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // 5. Execute Atomic Server-Side Order Stored Procedure
     const { data, error } = await supabase.rpc("create_order_secure", {
       p_customer_name: payload.customer_name,
       p_customer_phone: payload.customer_phone,
@@ -177,4 +169,3 @@ serve(async (req: Request) => {
     );
   }
 });
-

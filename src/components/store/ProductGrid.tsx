@@ -125,7 +125,6 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
   return (
     <section id="catalog-grid" className="container mx-auto px-4 py-8 flex-1">
-      {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 pb-4 border-b border-[#ECE4D4]">
         <div>
           <p className="text-xs font-bold text-[#88652A] uppercase tracking-[0.22em] mb-1.5">

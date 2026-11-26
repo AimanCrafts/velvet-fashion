@@ -1,6 +1,3 @@
--- Baseline seed data for delivery zones, initial catalog, and store settings
-
--- 1. Insert Delivery Zones
 INSERT INTO public.delivery_zones (id, name_en, name_bn, fee_bdt, free_above_bdt, eta_en, eta_bn, display_order)
 VALUES
     ('dhaka_metro', 'Dhaka Metro (Gulshan, Banani, Dhanmondi, Uttara, Mirpur)', 'ঢাকা মেট্রো (গুলশান, বনানী, ধানমন্ডি, উত্তরা, মিরপুর)', 70, 3000, 'Next Day Delivery (within 24 hours)', '২৪ ঘণ্টার মধ্যে দ্রুত ডেলিভারি', 1),
@@ -13,22 +10,22 @@ ON CONFLICT (id) DO UPDATE SET
     fee_bdt = EXCLUDED.fee_bdt,
     free_above_bdt = EXCLUDED.free_above_bdt;
 
--- 2. Insert Products
 INSERT INTO public.products (id, name_en, name_bn, category, audience, description_en, description_bn, fabric, origin, badge, image_url)
 VALUES
-    ('prod-01', 'Imperial Burgundy Velvet Party Kaftan', 'ইম্পেরিয়াল বার্গান্ডি ভেলভেট পার্টি কাফতান', 'Kaftans', 'women', 'Tailored from heavyweight velvet with hand-embroidered metallic zardozi along neckline and sleeve hems.', 'ভারী রাজকীয় মখমল কাপড়ে তৈরি এক্সক্লুসিভ কাফতান, গলায় ও হাতায় সূক্ষ্ম জারদৌসি কারুকাজ।', 'Imperial Velvet & Metallic Zardozi', 'Dhaka, Bangladesh', 'Bestseller', 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=900&q=85'),
-    ('prod-02', 'Handcrafted Silk-Cotton Festive Panjabi', 'হস্তনির্মিত সিল্ক-কটন উৎসবের পাঞ্জাবি', 'Panjabis', 'men', 'Subtle gold-thread threadwork along placket and collar on raw silk-cotton blend.', 'খাঁটি সিল্ক-কটন কাপড়ে তৈরি আভিজাত্যময় পাঞ্জাবি। কলার ও প্ল্যাকেটে সূক্ষ্ম সোনালী সুতোর কাজ।', 'Raw Silk-Cotton Blend', 'Dhaka, Bangladesh', 'New Arrival', 'https://images.unsplash.com/photo-1597983073493-88cd35cf93b0?auto=format&fit=crop&w=900&q=85'),
-    ('prod-03', 'Midnight Navy Embroidered Velvet Saree', 'মিডনাইট নেভি জারদৌসি ভেলভেট শাড়ি', 'Sarees', 'women', 'Micro-velvet body with pure organza pallu trimmed with dabka lace.', 'গভীর নেভি ব্লু মাইক্রো-ভেলভেটের সাথে অর্গানজা আঁচল এবং ডাবকা লেস ফিনিশিং।', 'Micro-Velvet & Tissue Organza', 'Dhaka, Bangladesh', 'Limited Edition', 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85'),
-    ('prod-04', 'Emerald Sovereign Velvet Sherwani-Panjabi', 'এমারেল্ড সভরেন ভেলভেট শেরওয়ানি-পাঞ্জাবি', 'Panjabis', 'men', 'Deep emerald velvet semi-formal cut with hand-cast antiqued brass buttons.', 'রাজকীয় পান্না সবুজ মখমলের সেমি-ফরমাল কাটিং, অ্যান্টিক মেটাল বোতামের অলঙ্করণ।', 'Heavy Velvet & Antique Metal', 'Dhaka, Bangladesh', 'Artisanal', 'https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=900&q=85'),
-    ('prod-05', 'Little Nawab Embroidered Panjabi & Velvet Koti Set', 'লিটল নবাব নকশী পাঞ্জাবি ও ভেলভেট কোটি সেট', 'Kids Wear', 'kids', 'Children festive ensemble: combed cotton panjabi paired with a plush velvet waistcoat.', 'শিশুদের উৎসবের সেট: আরামদায়ক কটন পাঞ্জাবির সাথে রাজকীয় ভেলভেট কটি।', 'Combed Cotton & Plush Velvet', 'Dhaka, Bangladesh', 'Kids Festive', 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=900&q=85'),
-    ('prod-06', 'Cashmere & Velvet Reversible Winter Shawl', 'কাশ্মীরি ও ভেলভেট রিভার্সিবল উইন্টার শাল', 'Shawls', 'unisex', 'Double-sided winter luxury: ultra-soft cashmere flannel fused with velvet border.', 'উভয় পাশে ব্যবহারযোগ্য প্রিমিয়াম কাশ্মীরি শাল, ভেলভেট কারুকাজ ও সিল্ক পাড়।', 'Cashmere Flannel & Velvet', 'Dhaka, Bangladesh', 'Heritage', 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=900&q=85')
+    ('prod-01', 'Imperial Burgundy Velvet Party Kaftan', 'ইম্পেরিয়াল বার্গান্ডি ভেলভেট পার্টি কাফতান', 'Kaftans', 'women', 'Full-length silk-blend burgundy velvet kaftan accented with hand-worked antique gold zardozi along the neckline and sleeve cuffs.', 'প্রিমিয়াম সিল্ক-ভেলভেটে তৈরি পূর্ণ দৈর্ঘ্যের বার্গান্ডি কাফতান, নেকলাইন ও হাতায় সোনালী জারদৌসি কারুকাজসহ।', 'Imperial Velvet & Metallic Zardozi', 'Dhaka, Bangladesh', 'Bestseller', './products/kaftan-burgundy-velvet.jpg'),
+    ('prod-02', 'Handcrafted Champagne Silk-Cotton Festive Panjabi', 'হস্তনির্মিত শ্যাম্পেন সিল্ক-কটন উৎসবের পাঞ্জাবি', 'Panjabis', 'men', 'Structured band-collar panjabi woven in luminous champagne raw silk-cotton with subtle gold tonal threadwork along the placket.', 'খাঁটি শ্যাম্পেন সিল্ক-কটন কাপড়ে তৈরি পাঞ্জাবি, কলার ও প্ল্যাকেটে সূক্ষ্ম সোনালী সুতোর কাজ।', 'Raw Silk-Cotton Blend', 'Dhaka, Bangladesh', 'New Arrival', './products/panjabi-champagne-silk.jpg'),
+    ('prod-03', 'Royal Plum & Gold Brocade Silk Saree', 'রয়্যাল প্লাম ও সোনালী ব্রোকেড সিল্ক শাড়ি', 'Sarees', 'women', 'Deep plum woven silk saree bordered in antique gold zari brocade and crimson piping, paired with a tailored black velvet blouse.', 'অ্যান্টিক সোনালী জরির পাড় ও লাল পাইপিংয়ে সজ্জিত গাঢ় প্লাম সিল্ক শাড়ি, কালো ভেলভেট ব্লাউজসহ।', 'Mulberry Silk with Zari Brocade Border', 'Dhaka, Bangladesh', 'Limited Edition', 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85'),
+    ('prod-04', 'Emerald Sovereign Velvet Sherwani-Panjabi', 'এমারেল্ড সভরেন ভেলভেট শেরওয়ানি-পাঞ্জাবি', 'Panjabis', 'men', 'Structured mid-thigh emerald velvet sherwani coat tailored with a mandarin collar and hand-cast antiqued brass buttons.', 'রাজকীয় পান্না সবুজ মখমলের সেমি-ফরমাল শেরওয়ানি-কাট পাঞ্জাবি, অ্যান্টিক পিতলের বোতামের অলঙ্করণসহ।', 'Heavy Velvet & Antique Brass Hardware', 'Dhaka, Bangladesh', 'Artisanal', './products/sherwani-emerald-velvet.jpg'),
+    ('prod-05', 'Little Nawab Embroidered Panjabi & Velvet Koti Set', 'লিটল নবাব এমব্রয়ডার্ড পাঞ্জাবি ও ভেলভেট কোটি সেট', 'Kids Wear', 'kids', 'Cream cotton-silk panjabi paired with a royal burgundy velvet waistcoat embroidered in gold thread along the collar and placket.', 'ক্রিম কটন-সিল্ক পাঞ্জাবি এবং গলায় ও পকেটে সোনালী নকশার রাজকীয় বার্গান্ডি ভেলভেট কোটির উৎসবের সেট।', 'Burgundy Velvet Koti & Cotton-Silk Panjabi', 'Dhaka, Bangladesh', 'Kids Festive', './products/kids-nawab-koti.jpg'),
+    ('prod-06', 'Heritage Checked Cashmere Winter Scarf & Wrap', 'হেরিটেজ চেকড কাশ্মীরি শীতের স্কার্ফ ও শাল', 'Shawls', 'unisex', 'Soft brushed cashmere-blend winter wrap woven in classic camel, espresso, and pine checks for effortless seasonal layering.', 'ক্যামেল, এস্প্রেসো ও পাইন রঙের ক্লাসিক চেক বুননে তৈরি উষ্ণ ও কোমল কাশ্মীরি শীতের শাল।', 'Brushed Cashmere & Merino Wool', 'Dhaka, Bangladesh', 'Heritage', 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&w=900&q=85')
 ON CONFLICT (id) DO UPDATE SET
     name_en = EXCLUDED.name_en,
     name_bn = EXCLUDED.name_bn,
+    description_en = EXCLUDED.description_en,
+    description_bn = EXCLUDED.description_bn,
     fabric = EXCLUDED.fabric,
     image_url = EXCLUDED.image_url;
 
--- 3. Insert Product Variants with Initial Inventory
 INSERT INTO public.product_variants (id, product_id, sku, size, color, color_code, price_bdt, cost_price_bdt, stock, is_available)
 VALUES
     ('v-01-s-burg', 'prod-01', 'VF-KAF-01-S', 'S', 'Imperial Burgundy', '#3E0713', 8500, 4800, 8, TRUE),
@@ -36,12 +33,12 @@ VALUES
     ('v-01-l-burg', 'prod-01', 'VF-KAF-01-L', 'L', 'Imperial Burgundy', '#3E0713', 8500, 4800, 8, TRUE),
     ('v-01-xl-burg', 'prod-01', 'VF-KAF-01-XL', 'XL', 'Imperial Burgundy', '#3E0713', 8500, 4800, 6, TRUE),
 
-    ('v-02-38-sand', 'prod-02', 'VF-PAN-02-38', 'Size 38 (S)', 'Desert Champagne', '#E6C87C', 4800, 2600, 12, TRUE),
-    ('v-02-40-sand', 'prod-02', 'VF-PAN-02-40', 'Size 40 (M)', 'Desert Champagne', '#E6C87C', 4800, 2600, 15, TRUE),
-    ('v-02-42-sand', 'prod-02', 'VF-PAN-02-42', 'Size 42 (L)', 'Desert Champagne', '#E6C87C', 4800, 2600, 14, TRUE),
-    ('v-02-44-sand', 'prod-02', 'VF-PAN-02-44', 'Size 44 (XL)', 'Desert Champagne', '#E6C87C', 4800, 2600, 9, TRUE),
+    ('v-02-38-sand', 'prod-02', 'VF-PAN-02-38', 'Size 38 (S)', 'Champagne Gold', '#E6C87C', 4800, 2600, 12, TRUE),
+    ('v-02-40-sand', 'prod-02', 'VF-PAN-02-40', 'Size 40 (M)', 'Champagne Gold', '#E6C87C', 4800, 2600, 15, TRUE),
+    ('v-02-42-sand', 'prod-02', 'VF-PAN-02-42', 'Size 42 (L)', 'Champagne Gold', '#E6C87C', 4800, 2600, 14, TRUE),
+    ('v-02-44-sand', 'prod-02', 'VF-PAN-02-44', 'Size 44 (XL)', 'Champagne Gold', '#E6C87C', 4800, 2600, 9, TRUE),
 
-    ('v-03-free-navy', 'prod-03', 'VF-SAR-03-FREE', 'Free Size (5.5m)', 'Midnight Navy', '#0B132B', 12500, 7200, 7, TRUE),
+    ('v-03-free-navy', 'prod-03', 'VF-SAR-03-FREE', 'Free Size (5.5m)', 'Royal Plum & Gold', '#4A1942', 12500, 7200, 7, TRUE),
 
     ('v-04-40-eme', 'prod-04', 'VF-SHR-04-40', 'Size 40 (M)', 'Emerald Velvet', '#0F382A', 7800, 4400, 10, TRUE),
     ('v-04-42-eme', 'prod-04', 'VF-SHR-04-42', 'Size 42 (L)', 'Emerald Velvet', '#0F382A', 7800, 4400, 11, TRUE),
@@ -50,12 +47,13 @@ VALUES
     ('v-05-6y-mar', 'prod-05', 'VF-KID-05-6Y', 'Age 6-7 Yrs', 'Royal Burgundy', '#520B1C', 3800, 2100, 10, TRUE),
     ('v-05-8y-mar', 'prod-05', 'VF-KID-05-8Y', 'Age 8-9 Yrs', 'Royal Burgundy', '#520B1C', 4200, 2300, 6, TRUE),
 
-    ('v-06-one-burg', 'prod-06', 'VF-SHW-06-ONE', 'One Size (210x75cm)', 'Burgundy & Camel', '#3E0713', 6200, 3400, 16, TRUE)
+    ('v-06-one-burg', 'prod-06', 'VF-SHW-06-ONE', 'One Size (210x75cm)', 'Camel & Espresso Check', '#6B4C35', 6200, 3400, 16, TRUE)
 ON CONFLICT (id) DO UPDATE SET
+    color = EXCLUDED.color,
+    color_code = EXCLUDED.color_code,
     price_bdt = EXCLUDED.price_bdt,
     stock = EXCLUDED.stock;
 
--- 4. Store Profile & Settings
 INSERT INTO public.site_settings (key, value, description)
 VALUES
     ('business_profile', jsonb_build_object(
@@ -72,4 +70,3 @@ VALUES
     ), 'Official business credentials and support channels')
 ON CONFLICT (key) DO UPDATE SET
     value = EXCLUDED.value;
-

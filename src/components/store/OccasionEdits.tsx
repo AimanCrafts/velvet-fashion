@@ -22,7 +22,7 @@ const OCCASIONS: OccasionCard[] = [
     tag_bn: "পর্ব ০১",
     title_en: "Wedding & Reception",
     title_bn: "বিয়ে ও রিসেপশন সাজ",
-    desc_en: "Velvet kaftans, embroidered sarees & sovereign sherwani cuts.",
+    desc_en: "Velvet kaftans, brocade sarees & sovereign sherwani cuts.",
     desc_bn: "ভেলভেট কাফতান, শাড়ি ও সভরেন শেরওয়ানি-পাঞ্জাবি।",
     image:
       "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80",
@@ -33,10 +33,9 @@ const OCCASIONS: OccasionCard[] = [
     tag_bn: "পর্ব ০২",
     title_en: "Festive & Family Eid",
     title_bn: "ঈদ ও পারিবারিক উৎসব",
-    desc_en: "Breathable silk-cotton panjabis & matching kids festive kotis.",
-    desc_bn: "আরামদায়ক সিল্ক-কটন পাঞ্জাবি ও ছোটদের কোটি সেট।",
-    image:
-      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=800&q=80",
+    desc_en: "Silk-cotton panjabis & velvet koti festive sets.",
+    desc_bn: "আরামদায়ক সিল্ক-কটন পাঞ্জাবি ও ভেলভেট কোটি সেট।",
+    image: "./products/panjabi-champagne-silk.jpg",
   },
   {
     id: "evening",
@@ -44,10 +43,9 @@ const OCCASIONS: OccasionCard[] = [
     tag_bn: "পর্ব ০৩",
     title_en: "Winter Soirée",
     title_bn: "শীতকালীন সন্ধ্যার পার্টি",
-    desc_en: "Deep jewel tones in heavy velvet & cashmere layering.",
-    desc_bn: "গভীর মখমল রঙ ও কাশ্মীরি শালের আভিজাত্য।",
-    image:
-      "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=800&q=80",
+    desc_en: "Deep jewel tones in heavy velvet & tailored formal cuts.",
+    desc_bn: "গভীর মখমল রঙ ও ফরমাল ব্লেজার-টাক্সিডো কাটিং।",
+    image: "./products/sherwani-emerald-velvet.jpg",
   },
   {
     id: "everyday",
@@ -55,8 +53,8 @@ const OCCASIONS: OccasionCard[] = [
     tag_bn: "পর্ব ০৪",
     title_en: "Wardrobe Essentials",
     title_bn: "নিত্যদিনের মার্জিত পোশাক",
-    desc_en: "Understated heritage weaves & reversible winter wraps.",
-    desc_bn: "ঐতিহ্যবাহী তাঁতের কাজ ও রিভার্সিবল শাল।",
+    desc_en: "Checked cashmere wraps & tailored cotton-silk shirts.",
+    desc_bn: "কাশ্মীরি চেক শাল ও কটন-সিল্ক শার্ট।",
     image:
       "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&w=800&q=80",
   },

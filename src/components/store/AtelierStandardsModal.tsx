@@ -2,7 +2,7 @@ import React from 'react';
 import { useStore } from '../../context/StoreContext';
 import { X, Palette, Layers, ShieldCheck, Sparkles } from 'lucide-react';
 
-export const DesignSystemModal: React.FC = () => {
+export const AtelierStandardsModal: React.FC = () => {
   const { isDesignSystemOpen, setIsDesignSystemOpen, isBn, siteSettings } = useStore();
 
   if (!isDesignSystemOpen) return null;

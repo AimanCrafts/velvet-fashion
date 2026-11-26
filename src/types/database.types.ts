@@ -1,7 +1,3 @@
-/**
- * Velvet Fashion — Supabase Database Types
- * Generated & mapped to the PostgreSQL migrations schema.
- */
 
 export type Json =
   | string
@@ -420,4 +416,3 @@ export interface Database {
     };
   };
 }
-

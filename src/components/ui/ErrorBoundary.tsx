@@ -10,11 +10,6 @@ interface State {
   errorId: string;
 }
 
-/**
- * Production Error Boundary
- * Catches unhandled runtime exceptions in the component tree and renders
- * a dignified, bilingual recovery screen without leaking stack traces or PII.
- */
 export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
     hasError: false,
@@ -22,13 +17,11 @@ export class ErrorBoundary extends Component<Props, State> {
   };
 
   public static getDerivedStateFromError(): State {
-    // Generate an anonymous reference code for tracking without revealing internals
     const errorId = `VF-ERR-${Math.floor(100000 + Math.random() * 900000)}`;
     return { hasError: true, errorId };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Log sanitized error context to console (never transmit unmasked customer PII)
     if (import.meta.env.DEV) {
       console.error("[Velvet Fashion ErrorBoundary]", error, errorInfo);
     }
@@ -88,4 +81,3 @@ export class ErrorBoundary extends Component<Props, State> {
     return this.props.children;
   }
 }
-

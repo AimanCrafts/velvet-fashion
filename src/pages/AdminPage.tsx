@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "../../router/Router";
-import { useStore } from "../../context/StoreContext";
-import { formatBdt } from "../../utils/formatters";
-import type { OrderStatus, LotRecord, Order } from "../../types";
-import { maskPhone, maskAddress } from "../../utils/security";
+import { Link } from "../router/Router";
+import { useStore } from "../context/StoreContext";
+import { formatBdt } from "../utils/formatters";
+import type { OrderStatus, LotRecord, Order } from "../types";
+import { maskPhone, maskAddress } from "../utils/security";
 import {
   isSupabaseConfigured,
   signInStaff,
@@ -15,7 +15,7 @@ import {
   createInventoryLotRemote,
   updateSiteSettingsRemote,
   type AdminOrderRecord,
-} from "../../services/supabaseClient";
+} from "../services/supabaseClient";
 import {
   Truck,
   Boxes,
@@ -48,7 +48,6 @@ export const AdminPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"orders" | "lots" | "compliance">("orders");
   const [orderFilter, setOrderFilter] = useState<string>("all");
 
-  // Staff Supabase Authentication State
   const [authEmail, setAuthEmail] = useState("");
   const [authPassword, setAuthPassword] = useState("");
   const [authError, setAuthError] = useState("");
@@ -91,7 +90,6 @@ export const AdminPage: React.FC = () => {
     sessionStorage.removeItem("vf_staff_session");
   };
 
-  // Live PostgreSQL Remote Data State
   const [remoteOrders, setRemoteOrders] = useState<AdminOrderRecord[] | null>(null);
   const [remoteLots, setRemoteLots] = useState<LotRecord[] | null>(null);
   const [isLoadingRemoteData, setIsLoadingRemoteData] = useState(false);
@@ -150,7 +148,6 @@ export const AdminPage: React.FC = () => {
     };
   }, [staffSession?.token]);
 
-  // Map remote PostgreSQL orders or fall back to local store orders
   const displayedOrders: Array<Order & { internalId?: string; paymentStatus?: string; customerAltPhone?: string }> = (staffSession && remoteOrders)
     ? remoteOrders.map((ro) => ({
         id: ro.order_number,
@@ -452,7 +449,6 @@ export const AdminPage: React.FC = () => {
           </div>
         )}
 
-        {/* Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-[#ECE4D4]">
           <div className="flex items-center gap-3">
             <img
@@ -508,7 +504,6 @@ export const AdminPage: React.FC = () => {
           </div>
         </div>
 
-        {/* KPI Stats Bar */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="p-5 rounded-2xl bg-white border border-[#ECE4D4] shadow-2xs">
             <div className="flex items-center justify-between mb-2">
@@ -563,7 +558,6 @@ export const AdminPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Action Notification Banner */}
         {actionMessage && (
           <div
             className={`mb-6 p-4 rounded-2xl border text-xs flex items-center justify-between gap-3 animate-fade-in ${
@@ -589,7 +583,6 @@ export const AdminPage: React.FC = () => {
           </div>
         )}
 
-        {/* Tabs & Live Refresh */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#ECE4D4] mb-6">
           <div className="flex items-center gap-6 text-xs font-bold">
             <button
@@ -637,10 +630,8 @@ export const AdminPage: React.FC = () => {
           )}
         </div>
 
-        {/* Tab 1: Orders */}
         {activeTab === "orders" && (
           <div className="space-y-4">
-            {/* Status Filter Pills */}
             <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2">
               {[
                 { id: "all", label: "All Orders" },
@@ -665,7 +656,6 @@ export const AdminPage: React.FC = () => {
               ))}
             </div>
 
-            {/* Orders Table */}
             <div className="space-y-3">
               {filteredOrders.length === 0 ? (
                 <div className="p-8 text-center bg-white rounded-2xl border border-[#ECE4D4] text-xs text-stone-500">
@@ -758,7 +748,6 @@ export const AdminPage: React.FC = () => {
                         </div>
                       </div>
 
-                      {/* Customer Information */}
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                         <div>
                           <span className="text-stone-400 block mb-0.5 font-medium">Customer</span>
@@ -806,7 +795,6 @@ export const AdminPage: React.FC = () => {
           </div>
         )}
 
-        {/* Tab 2: Inventory & Sourced Lots */}
         {activeTab === "lots" && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -865,7 +853,6 @@ export const AdminPage: React.FC = () => {
           </div>
         )}
 
-        {/* Tab 3: Store & Compliance Settings */}
         {activeTab === "compliance" && (
           <div className="bg-white rounded-2xl border border-[#ECE4D4] p-6 shadow-2xs space-y-6">
             <div className="border-b pb-4">
@@ -975,7 +962,6 @@ export const AdminPage: React.FC = () => {
           </div>
         )}
 
-        {/* Lot Creation Modal */}
         {showLotModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
             <div className="w-full max-w-md bg-white rounded-2xl border border-[#ECE4D4] p-6 shadow-2xl">
@@ -1060,7 +1046,6 @@ export const AdminPage: React.FC = () => {
         )}
       </div>
 
-      {/* Print slip template */}
       {orderToPrint && (
         <div className="hidden print:block print:w-full print:p-8 font-sans text-stone-900 bg-white">
           <div className="border-b-2 border-[#3E0713] pb-4 mb-6 flex justify-between items-start">

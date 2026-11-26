@@ -96,7 +96,6 @@ export const CheckoutModal: React.FC = () => {
       return;
     }
 
-    // Phone validation
     const phoneCheck = validateBdPhone(phone);
     if (!phoneCheck.isValid) {
       setErrorMessage(
@@ -192,7 +191,6 @@ export const CheckoutModal: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
       <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-[#ECE4D4] my-8 overflow-hidden">
-        {/* Modal Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#ECE4D4] bg-[#FAF8F5]">
           <div>
             <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#24030B]">
@@ -212,7 +210,6 @@ export const CheckoutModal: React.FC = () => {
           </button>
         </div>
 
-        {/* Modal Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-5 max-h-[80vh] overflow-y-auto">
           {errorMessage && (
             <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
@@ -221,7 +218,6 @@ export const CheckoutModal: React.FC = () => {
             </div>
           )}
 
-          {/* Hidden honeypot field */}
           <div className="hidden" aria-hidden="true">
             <input
               type="text"
@@ -233,7 +229,6 @@ export const CheckoutModal: React.FC = () => {
             />
           </div>
 
-          {/* Contact Information */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#3E0713]">
               {isBn ? "১. গ্রাহকের তথ্য" : "1. Customer Information"}
@@ -298,7 +293,6 @@ export const CheckoutModal: React.FC = () => {
             </div>
           </div>
 
-          {/* Delivery Zone & Address */}
           <div className="space-y-3 pt-2 border-t border-stone-100">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#3E0713] flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-[#88652A]" />
@@ -337,7 +331,6 @@ export const CheckoutModal: React.FC = () => {
             </div>
           </div>
 
-          {/* Delivery Slot */}
           <div className="space-y-2 pt-2 border-t border-stone-100">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#3E0713] flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-[#88652A]" />
@@ -354,7 +347,6 @@ export const CheckoutModal: React.FC = () => {
             </select>
           </div>
 
-          {/* Payment Method */}
           <div className="space-y-3 pt-2 border-t border-stone-100">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#3E0713] flex items-center gap-1.5">
               <Banknote className="w-3.5 h-3.5 text-[#88652A]" />
@@ -452,7 +444,6 @@ export const CheckoutModal: React.FC = () => {
             )}
           </div>
 
-          {/* Order Notes */}
           <div className="pt-2 border-t border-stone-100">
             <label className="block text-xs font-semibold text-stone-700 mb-1">
               {isBn ? "বিশেষ কোনো নির্দেশনা (ঐচ্ছিক)" : "Order Notes (Optional)"}
@@ -466,7 +457,6 @@ export const CheckoutModal: React.FC = () => {
             />
           </div>
 
-          {/* Pricing Summary */}
           <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#ECE4D4] space-y-1.5 text-xs">
             <div className="flex justify-between text-stone-600">
               <span>{isBn ? "পোশাকের মূল্য (সাবটোটাল):" : "Items Subtotal:"}</span>
@@ -482,7 +472,6 @@ export const CheckoutModal: React.FC = () => {
             </div>
           </div>
 
-          {/* Submit Actions */}
           <div className="flex items-center justify-end gap-3 pt-2">
             <button
               type="button"
@@ -512,4 +501,3 @@ export const CheckoutModal: React.FC = () => {
     </div>
   );
 };
-

@@ -46,7 +46,6 @@ export const CartDrawer: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden animate-fade-in">
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
         onClick={() => setIsCartOpen(false)}
@@ -54,7 +53,6 @@ export const CartDrawer: React.FC = () => {
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
         <div className="animate-drawer w-screen max-w-md bg-[#FAF8F5] shadow-2xl flex flex-col justify-between border-s border-[#ECE4D4]">
-          {/* Header */}
           <div className="p-4 border-b border-[#ECE4D4] flex items-center justify-between bg-white">
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-[#3E0713]" />
@@ -74,7 +72,6 @@ export const CartDrawer: React.FC = () => {
             </button>
           </div>
 
-          {/* Delivery Progress Indicator */}
           <div className="bg-[#F7F3EA] px-4 py-3 border-b border-[#ECE4D4] text-xs">
             <div className="flex items-center gap-2 mb-1.5 text-stone-700 font-medium">
               <Truck className="w-4 h-4 text-[#C5A059]" />
@@ -100,7 +97,6 @@ export const CartDrawer: React.FC = () => {
             </div>
           </div>
 
-          {/* Items List */}
           <div className="p-4 flex-1 overflow-y-auto space-y-3.5">
             {cartItems.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-16 text-stone-500">
@@ -160,7 +156,6 @@ export const CartDrawer: React.FC = () => {
                       </div>
 
                       <div className="flex items-center justify-between pt-2 border-t border-stone-100">
-                        {/* Qty Stepper */}
                         <div className="flex items-center border border-stone-200 rounded-md bg-[#FAF8F5]">
                           <button
                             onClick={() => updateCartQty(item.variant.id, -1)}
@@ -196,7 +191,6 @@ export const CartDrawer: React.FC = () => {
             )}
           </div>
 
-          {/* Footer & Checkout Action */}
           {cartItems.length > 0 && (
             <div className="p-4 bg-white border-t border-[#ECE4D4] space-y-3">
               <div className="space-y-1 text-xs">

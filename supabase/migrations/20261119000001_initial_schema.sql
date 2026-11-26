@@ -1,11 +1,6 @@
--- Velvet Fashion production schema (initial migration)
-
--- 1. Enable Required Extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- 2. Staff Profiles & Role-Based Access Control (RBAC)
--- Synchronized with Supabase auth.users
 CREATE TABLE IF NOT EXISTS public.profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     email TEXT NOT NULL UNIQUE,
@@ -16,7 +11,6 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 3. Delivery Zones & Authoritative Shipping Fees (Bangladesh)
 CREATE TABLE IF NOT EXISTS public.delivery_zones (
     id TEXT PRIMARY KEY,
     name_en TEXT NOT NULL,
@@ -30,7 +24,6 @@ CREATE TABLE IF NOT EXISTS public.delivery_zones (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 4. Catalog: Products
 CREATE TABLE IF NOT EXISTS public.products (
     id TEXT PRIMARY KEY,
     name_en TEXT NOT NULL,
@@ -51,7 +44,6 @@ CREATE TABLE IF NOT EXISTS public.products (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 5. Catalog: Product Variants (Authoritative Price & Inventory)
 CREATE TABLE IF NOT EXISTS public.product_variants (
     id TEXT PRIMARY KEY,
     product_id TEXT NOT NULL REFERENCES public.products(id) ON DELETE CASCADE,
@@ -67,7 +59,6 @@ CREATE TABLE IF NOT EXISTS public.product_variants (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 6. Inventory: Inbound Stock Lots & Cost Tracking
 CREATE TABLE IF NOT EXISTS public.inventory_lots (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     lot_number TEXT NOT NULL UNIQUE,
@@ -82,15 +73,14 @@ CREATE TABLE IF NOT EXISTS public.inventory_lots (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 7. Orders (Unguessable UUID + Tokenized Anonymous Access)
 CREATE TABLE IF NOT EXISTS public.orders (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    order_number TEXT UNIQUE NOT NULL, -- Human-readable identifier: VF-BD-XXXX
-    lookup_token TEXT UNIQUE NOT NULL DEFAULT encode(gen_random_bytes(16), 'hex'), -- Unguessable 128-bit access token
-    idempotency_key TEXT UNIQUE, -- Prevents duplicate order placement on network retry
+    order_number TEXT UNIQUE NOT NULL,
+    lookup_token TEXT UNIQUE NOT NULL DEFAULT encode(gen_random_bytes(16), 'hex'),
+    idempotency_key TEXT UNIQUE,
     customer_name TEXT NOT NULL,
-    customer_phone TEXT NOT NULL, -- Normalized: +880 1XXXXXXXXX
-    customer_alt_phone TEXT, -- Optional secondary contact
+    customer_phone TEXT NOT NULL,
+    customer_alt_phone TEXT,
     customer_email TEXT,
     zone_id TEXT NOT NULL REFERENCES public.delivery_zones(id) ON DELETE RESTRICT,
     address TEXT NOT NULL,
@@ -110,7 +100,6 @@ CREATE TABLE IF NOT EXISTS public.orders (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 8. Order Line Items (Locked Snapshot of Purchase)
 CREATE TABLE IF NOT EXISTS public.order_items (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
@@ -124,7 +113,6 @@ CREATE TABLE IF NOT EXISTS public.order_items (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 9. Authoritative Security Audit Trail
 CREATE TABLE IF NOT EXISTS public.audit_logs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     actor_id UUID REFERENCES auth.users(id),
@@ -137,7 +125,6 @@ CREATE TABLE IF NOT EXISTS public.audit_logs (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 10. Official Site Settings & Regulatory Information
 CREATE TABLE IF NOT EXISTS public.site_settings (
     key TEXT PRIMARY KEY,
     value JSONB NOT NULL,
@@ -146,7 +133,6 @@ CREATE TABLE IF NOT EXISTS public.site_settings (
     updated_by UUID REFERENCES public.profiles(id)
 );
 
--- 11. Performance & Security Indexes
 CREATE INDEX IF NOT EXISTS idx_products_published ON public.products(is_published);
 CREATE INDEX IF NOT EXISTS idx_variants_product_id ON public.product_variants(product_id);
 CREATE INDEX IF NOT EXISTS idx_variants_available ON public.product_variants(is_available);
@@ -157,4 +143,3 @@ CREATE INDEX IF NOT EXISTS idx_orders_status ON public.orders(status);
 CREATE INDEX IF NOT EXISTS idx_orders_created_at ON public.orders(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_order_items_order ON public.order_items(order_id);
 CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON public.audit_logs(created_at DESC);
-

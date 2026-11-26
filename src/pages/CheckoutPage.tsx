@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { useRouter, Link } from "../../router/Router";
-import { useStore } from "../../context/StoreContext";
-import { formatBdt } from "../../utils/formatters";
-import type { PaymentMethod } from "../../types";
+import { useRouter, Link } from "../router/Router";
+import { useStore } from "../context/StoreContext";
+import { formatBdt } from "../utils/formatters";
+import type { PaymentMethod } from "../types";
 import {
   sanitizeInput,
   validateBdPhone,
   validateEmail,
   validateTrxId,
-} from "../../utils/security";
+} from "../utils/security";
 import {
   ShieldCheck,
   MapPin,
@@ -201,7 +201,6 @@ export const CheckoutPage: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12 animate-fade-in">
-      {/* Checkout Breadcrumbs */}
       <div className="flex items-center gap-2 text-xs text-stone-500 mb-8 pb-4 border-b border-[#ECE4D4]">
         <Link to="/shop" className="hover:text-[#3E0713]">
           {isBn ? "কালেকশন" : "Collections"}
@@ -213,7 +212,6 @@ export const CheckoutPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-        {/* Left Column: Delivery & Customer Details Form (7 cols) */}
         <div className="lg:col-span-7">
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="hidden opacity-0 pointer-events-none absolute -left-[9999px]" aria-hidden="true">
@@ -229,7 +227,6 @@ export const CheckoutPage: React.FC = () => {
               />
             </div>
 
-            {/* Step 1: Contact Details */}
             <div className="bg-white rounded-2xl border border-[#ECE4D4] p-6 shadow-2xs space-y-4">
               <div className="flex items-center gap-2.5 pb-3 border-b border-stone-100">
                 <div className="w-7 h-7 rounded-full bg-[#3E0713] text-[#F4E2B5] font-bold text-xs flex items-center justify-center">
@@ -309,7 +306,6 @@ export const CheckoutPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Step 2: Bangladesh Delivery Zone */}
             <div className="bg-white rounded-2xl border border-[#ECE4D4] p-6 shadow-2xs space-y-4">
               <div className="flex items-center gap-2.5 pb-3 border-b border-stone-100">
                 <div className="w-7 h-7 rounded-full bg-[#3E0713] text-[#F4E2B5] font-bold text-xs flex items-center justify-center">
@@ -383,7 +379,6 @@ export const CheckoutPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Step 3: Preferred Delivery Slot & Payment Method */}
             <div className="bg-white rounded-2xl border border-[#ECE4D4] p-6 shadow-2xs space-y-4">
               <div className="flex items-center gap-2.5 pb-3 border-b border-stone-100">
                 <div className="w-7 h-7 rounded-full bg-[#3E0713] text-[#F4E2B5] font-bold text-xs flex items-center justify-center">
@@ -395,10 +390,8 @@ export const CheckoutPage: React.FC = () => {
                 </h3>
               </div>
 
-              {/* Payment Methods */}
               <div className="space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {/* COD */}
                   <button
                     type="button"
                     onClick={() => setPaymentMethod("cod")}
@@ -419,7 +412,6 @@ export const CheckoutPage: React.FC = () => {
                     </span>
                   </button>
 
-                  {/* bKash */}
                   <button
                     type="button"
                     onClick={() => setPaymentMethod("bkash")}
@@ -440,7 +432,6 @@ export const CheckoutPage: React.FC = () => {
                     </span>
                   </button>
 
-                  {/* Nagad */}
                   <button
                     type="button"
                     onClick={() => setPaymentMethod("nagad")}
@@ -462,7 +453,6 @@ export const CheckoutPage: React.FC = () => {
                   </button>
                 </div>
 
-                {/* bKash / Nagad TrxID instructions */}
                 {(paymentMethod === "bkash" || paymentMethod === "nagad") && (
                   <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#ECE4D4] space-y-3 animate-fade-in text-xs">
                     <div className="flex items-center gap-2 font-bold text-stone-900">
@@ -497,7 +487,6 @@ export const CheckoutPage: React.FC = () => {
                 )}
               </div>
 
-              {/* Delivery Window */}
               <div className="pt-2">
                 <label className="block text-xs font-semibold text-stone-700 mb-1.5 flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5 text-[#88652A]" />
@@ -563,7 +552,6 @@ export const CheckoutPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Error Message banner */}
             {errorMessage && (
               <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
@@ -573,14 +561,12 @@ export const CheckoutPage: React.FC = () => {
           </form>
         </div>
 
-        {/* Right Column: Order Summary & Place Order CTA (5 cols) */}
         <div className="lg:col-span-5">
           <div className="bg-white rounded-2xl border border-[#ECE4D4] p-6 shadow-sm sticky top-24 space-y-6">
             <h3 className="font-['Playfair_Display'] text-lg font-bold text-[#24030B] pb-3 border-b border-[#ECE4D4]">
               {isBn ? "অর্ডার সামারি" : "Order Summary"}
             </h3>
 
-            {/* Line Items */}
             <div className="divide-y divide-stone-100 max-h-72 overflow-y-auto pr-1">
               {cartItems.map((item) => {
                 const itemPrice = item.variant.priceBdt ?? item.variant.priceQar ?? 0;
@@ -610,7 +596,6 @@ export const CheckoutPage: React.FC = () => {
               })}
             </div>
 
-            {/* Free Shipping Alert if applicable */}
             {amountToFree > 0 ? (
               <div className="bg-[#FAF8F5] p-3 rounded-xl border border-[#ECE4D4] text-xs text-stone-600 flex items-center gap-2">
                 <Truck className="w-4 h-4 text-[#88652A] shrink-0" />
@@ -631,7 +616,6 @@ export const CheckoutPage: React.FC = () => {
               </div>
             )}
 
-            {/* Totals Breakdown */}
             <div className="space-y-2 pt-2 border-t border-[#ECE4D4] text-xs">
               <div className="flex justify-between text-stone-600">
                 <span>{isBn ? "সাবটোটাল:" : "Subtotal:"}</span>
@@ -651,7 +635,6 @@ export const CheckoutPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Payment Method Notice */}
             <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#C5A059]/40 space-y-1.5">
               <div className="flex items-center gap-2 text-xs font-bold text-[#3E0713]">
                 <ShieldCheck className="w-4 h-4 text-[#88652A]" />
@@ -668,7 +651,6 @@ export const CheckoutPage: React.FC = () => {
               </p>
             </div>
 
-            {/* Place Order CTA Button */}
             <button
               onClick={handleSubmit}
               disabled={isSubmitting}
@@ -686,7 +668,6 @@ export const CheckoutPage: React.FC = () => {
               </span>
             </button>
 
-            {/* Legal compliance note */}
             <p className="text-[10px] text-center text-stone-400">
               {isBn
                 ? "বাণিজ্য মন্ত্রণালয় বাংলাদেশ ডিজিটাল কমার্স নির্দেশিকা অনুযায়ী নিবন্ধিত ও পরিচালিত"

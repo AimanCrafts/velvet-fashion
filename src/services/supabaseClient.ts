@@ -144,9 +144,6 @@ export interface AdminOrderRecord {
   }>;
 }
 
-/**
- * Submit order to Supabase PostgreSQL.
- */
 export async function createOrderRemote(payload: {
   customer_name: string;
   customer_phone: string;
@@ -195,9 +192,6 @@ export async function createOrderRemote(payload: {
   return data as RemoteOrderResult;
 }
 
-/**
- * Fetch order status by lookup token or order number.
- */
 export async function getOrderStatusRemote(
   lookupToken: string,
   phoneLast4?: string
@@ -226,9 +220,6 @@ export async function getOrderStatusRemote(
   return data as RemoteOrderStatus;
 }
 
-/**
- * Fetch published products and active variants.
- */
 export async function fetchProductsRemote(): Promise<Product[]> {
   if (!isSupabaseConfigured()) return [];
 
@@ -291,9 +282,6 @@ function mapRawProducts(rawList: RawProductRecord[]): Product[] {
   });
 }
 
-/**
- * Fetch authoritative active delivery zones.
- */
 export async function fetchDeliveryZonesRemote(): Promise<DeliveryZone[]> {
   if (!isSupabaseConfigured()) return [];
 
@@ -317,9 +305,6 @@ export async function fetchDeliveryZonesRemote(): Promise<DeliveryZone[]> {
   }));
 }
 
-/**
- * Fetch regulatory site settings.
- */
 export async function fetchSiteSettingsRemote(): Promise<Partial<SiteSettings> | null> {
   if (!isSupabaseConfigured()) return null;
 
@@ -345,9 +330,6 @@ export async function fetchSiteSettingsRemote(): Promise<Partial<SiteSettings> |
   };
 }
 
-/**
- * Staff Authentication via Supabase Auth REST API
- */
 export async function signInStaff(email: string, password: string): Promise<{
   access_token: string;
   user: { id: string; email: string };
@@ -376,9 +358,6 @@ export async function signInStaff(email: string, password: string): Promise<{
   };
 }
 
-/**
- * Fetch staff profile to verify role from public.profiles table
- */
 export async function fetchStaffProfile(userId: string, accessToken: string): Promise<Database['public']['Tables']['profiles']['Row'] | null> {
   const endpoint = `${SUPABASE_URL}/rest/v1/profiles?id=eq.${encodeURIComponent(userId)}&select=*`;
 
@@ -393,9 +372,6 @@ export async function fetchStaffProfile(userId: string, accessToken: string): Pr
   return data[0] || null;
 }
 
-/**
- * Admin: Fetch authoritative orders with line items.
- */
 export async function fetchAdminOrdersRemote(accessToken: string): Promise<AdminOrderRecord[]> {
   if (!isSupabaseConfigured()) return [];
 
@@ -413,9 +389,6 @@ export async function fetchAdminOrdersRemote(accessToken: string): Promise<Admin
   return await response.json();
 }
 
-/**
- * Admin: Fetch inbound inventory lots.
- */
 export async function fetchAdminLotsRemote(accessToken: string): Promise<LotRecord[]> {
   if (!isSupabaseConfigured()) return [];
 
@@ -451,9 +424,6 @@ export async function fetchAdminLotsRemote(accessToken: string): Promise<LotReco
   }));
 }
 
-/**
- * Admin: Update order status via audited RPC.
- */
 export async function updateOrderStatusRemote(
   orderId: string,
   newStatus: OrderStatus,
@@ -483,9 +453,6 @@ export async function updateOrderStatusRemote(
   return await response.json();
 }
 
-/**
- * Admin: Verify bKash / Nagad payment via audited RPC.
- */
 export async function verifyOrderPaymentRemote(
   orderId: string,
   accessToken: string,
@@ -513,9 +480,6 @@ export async function verifyOrderPaymentRemote(
   return await response.json();
 }
 
-/**
- * Admin: Record inbound inventory lot in PostgreSQL.
- */
 export async function createInventoryLotRemote(
   lot: {
     lotNumber: string;
@@ -557,9 +521,6 @@ export async function createInventoryLotRemote(
   return { success: true };
 }
 
-/**
- * Admin: Persist regulatory site settings to PostgreSQL.
- */
 export async function updateSiteSettingsRemote(
   settings: Partial<SiteSettings>,
   accessToken: string
@@ -596,4 +557,3 @@ export async function updateSiteSettingsRemote(
 
   return { success: true };
 }
-

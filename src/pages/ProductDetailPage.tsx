@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useRouter, Link } from "../../router/Router";
-import { useStore } from "../../context/StoreContext";
-import { formatBdt } from "../../utils/formatters";
-import { ProductCard } from "../store/ProductCard";
-import { SizeGuideModal } from "./SizeGuideModal";
-import type { Product, ProductVariant } from "../../types";
+import { useRouter, Link } from "../router/Router";
+import { useStore } from "../context/StoreContext";
+import { formatBdt } from "../utils/formatters";
+import { ProductCard } from "../components/store/ProductCard";
+import { SizeGuideModal } from "../components/store/SizeGuideModal";
+import type { Product, ProductVariant } from "../types";
 import {
   Heart,
   ShoppingBag,
@@ -54,18 +54,15 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
   const inStock = currentVariant.stockQty > 0;
   const currentPrice = currentVariant.priceBdt ?? currentVariant.priceQar ?? 0;
 
-  // Additional image list
   const allImages = [
     product.imageUrl,
     ...(product.additionalImages || []),
   ].filter(Boolean);
 
-  // Related products
   const related = products
     .filter((p) => p.id !== product.id && p.audience === product.audience)
     .slice(0, 3);
 
-  // Recently viewed products
   const recentProducts = recentlyViewed
     .filter((id) => id !== product.id)
     .map((id) => products.find((p) => p.id === id))
@@ -88,7 +85,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-10 animate-fade-in">
-      {/* Breadcrumb Navigation */}
       <nav className="flex items-center gap-2 text-xs text-stone-500 mb-6 overflow-x-auto whitespace-nowrap">
         <Link to="/" className="hover:text-[#3E0713] transition">
           {isBn ? "হোম" : "Home"}
@@ -103,11 +99,8 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
         </span>
       </nav>
 
-      {/* Main Grid: Gallery & Info */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16">
-        {/* Left Column: Image Gallery (6 cols) */}
         <div className="lg:col-span-6 space-y-4">
-          {/* Main Visual Display */}
           <div className="relative aspect-[3/4] bg-[#F2ECE4] rounded-2xl overflow-hidden border border-[#ECE4D4] shadow-sm">
             {imgError ? (
               <div className="w-full h-full flex flex-col items-center justify-center bg-[#2A030C] text-[#F4E2B5] p-6 text-center">
@@ -130,7 +123,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
               />
             )}
 
-            {/* Badges */}
             <div className="absolute top-4 start-4 flex flex-col gap-2">
               {product.newArrival && (
                 <span className="px-3 py-1 rounded-full bg-[#FAF8F5]/95 text-[#3E0713] text-[10px] font-bold tracking-widest uppercase shadow-sm border border-[#ECE4D4]">
@@ -144,7 +136,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
               )}
             </div>
 
-            {/* Wishlist Button */}
             <button
               onClick={() => toggleWishlist(product.id)}
               className="absolute top-4 end-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center hover:bg-white shadow-md active:scale-90 transition"
@@ -158,7 +149,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
             </button>
           </div>
 
-          {/* Thumbnails if multiple images exist */}
           {allImages.length > 1 && (
             <div className="flex items-center gap-3 overflow-x-auto no-scrollbar py-1">
               {allImages.map((img, i) => (
@@ -179,10 +169,8 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
           )}
         </div>
 
-        {/* Right Column: Garment Specs, Sizing & Actions (6 cols) */}
         <div className="lg:col-span-6 flex flex-col justify-between">
           <div className="space-y-6">
-            {/* Collection & Category */}
             <div>
               <p className="text-xs uppercase tracking-[0.2em] font-bold text-[#88652A] mb-1">
                 {isBn ? product.collection_bn : product.collection} • {isBn ? product.category_bn : product.category}
@@ -192,7 +180,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
               </h1>
             </div>
 
-            {/* Price & Scarcity */}
             <div className="flex items-baseline justify-between py-3 border-y border-[#ECE4D4]">
               <div className="flex items-baseline gap-2">
                 <span className="font-['Plus_Jakarta_Sans'] text-2xl sm:text-3xl font-bold text-[#3E0713]">
@@ -203,7 +190,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
                 </span>
               </div>
 
-              {/* Stock Scarcity Status */}
               <div>
                 {currentVariant.stockQty > 0 ? (
                   currentVariant.stockQty <= 3 ? (
@@ -225,12 +211,10 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
               </div>
             </div>
 
-            {/* Description */}
             <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
               {isBn ? product.description_bn : product.description_en}
             </p>
 
-            {/* Color Swatch Options */}
             <div>
               <label className="block text-xs font-bold text-stone-800 uppercase tracking-wider mb-2">
                 {isBn ? "নির্বাচিত রঙ:" : "Selected Hue:"} <span className="text-[#88652A] font-semibold">{currentVariant.color}</span>
@@ -260,7 +244,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
               </div>
             </div>
 
-            {/* Size Selector + Size Guide Link */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-xs font-bold text-stone-800 uppercase tracking-wider">
@@ -301,7 +284,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
               </div>
             </div>
 
-            {/* Quantity Selector */}
             <div className="flex items-center gap-4 pt-1">
               <label className="text-xs font-bold text-stone-800 uppercase tracking-wider">
                 {isBn ? "পরিমাণ:" : "Quantity:"}
@@ -329,10 +311,8 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
               </div>
             </div>
 
-            {/* CTAs */}
             <div className="space-y-3 pt-2">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {/* Add to Bag */}
                 <button
                   onClick={handleAddBag}
                   disabled={!inStock}
@@ -342,7 +322,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
                   <span>{isBn ? "ব্যাগে যুক্ত করুন" : "Add to Shopping Bag"}</span>
                 </button>
 
-                {/* Direct Buy Now with COD */}
                 <button
                   onClick={handleBuyNow}
                   disabled={!inStock}
@@ -353,7 +332,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
                 </button>
               </div>
 
-              {/* WhatsApp Concierge direct question */}
               <a
                 href={waUrl}
                 target="_blank"
@@ -369,7 +347,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
               </a>
             </div>
 
-            {/* Trust Highlights Strip */}
             <div className="grid grid-cols-3 gap-2 pt-4 border-t border-[#ECE4D4] text-[11px] text-stone-600">
               <div className="flex items-center gap-2">
                 <Truck className="w-4 h-4 text-[#88652A] shrink-0" />
@@ -386,7 +363,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
             </div>
           </div>
 
-          {/* Accordion / Info Tabs */}
           <div className="mt-8 border-t border-[#ECE4D4] pt-4">
             <div className="flex items-center gap-4 border-b border-[#ECE4D4] text-xs font-bold">
               <button
@@ -461,14 +437,12 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
         </div>
       </div>
 
-      {/* Sizing Guide Modal */}
       <SizeGuideModal
         isOpen={isSizeGuideOpen}
         onClose={() => setIsSizeGuideOpen(false)}
         category={product.category}
       />
 
-      {/* Related Products Section */}
       {related.length > 0 && (
         <section className="pt-12 border-t border-[#ECE4D4] my-12">
           <div className="flex items-center justify-between mb-6">
@@ -490,7 +464,6 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
         </section>
       )}
 
-      {/* Recently Viewed Section */}
       {recentProducts.length > 0 && (
         <section className="pt-12 border-t border-[#ECE4D4]">
           <h3 className="font-['Playfair_Display'] text-lg font-normal text-[#24030B] mb-6">
@@ -509,7 +482,7 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
 
 export const ProductDetailPage: React.FC = () => {
   const { segments } = useRouter();
-  const productId = segments[1]; // /product/:id
+  const productId = segments[1];
 
   const { products, isBn } = useStore();
   const product = products.find((p) => p.id === productId);
