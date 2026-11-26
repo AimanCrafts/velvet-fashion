@@ -131,9 +131,18 @@ assert(rpcSql.includes('v_total := v_subtotal + v_delivery_fee;'), 'Server recal
 assert(rpcSql.includes('p_idempotency_key TEXT DEFAULT NULL'), 'create_order_secure handles idempotency guard parameter');
 assert(rpcSql.includes('LOOP') && rpcSql.includes('VF-BD-'), 'Collision-safe order number generator with retry loop implemented');
 assert(rpcSql.includes('verify_order_payment_admin'), 'verify_order_payment_admin RPC exists to reconcile bKash/Nagad transactions');
+assert((rpcSql.match(/CREATE OR REPLACE FUNCTION public\.verify_order_payment_admin/g) || []).length === 1, 'verify_order_payment_admin is defined once without duplicates');
+assert(rpcSql.includes('Phone verification required for order number lookup'), 'get_order_status_secure requires phone verification when querying by order_number');
 assert(rpcSql.includes('PAYMENT_UNVERIFIED'), 'update_order_status_admin enforces anti-fraud block on unverified bKash/Nagad orders');
 assert(seedSql.includes('nationwide_express'), 'Seed data defines nationwide_express delivery zone');
 assert(storageSql.includes("bucket_id IN ('catalog', 'brand')"), 'Storage bucket RLS policies configured');
+
+const hardeningSql = fs.readFileSync(path.join(migrationsDir, '20261127000008_database_security_hardening.sql'), 'utf-8');
+assert(hardeningSql.includes('CREATE TABLE IF NOT EXISTS public.edge_rate_limits'), 'Shared PostgreSQL edge_rate_limits table exists');
+assert(hardeningSql.includes('REVOKE CREATE ON SCHEMA public FROM PUBLIC, anon, authenticated;'), 'Public schema creation revoked for non-privileged roles');
+
+const httpShared = fs.readFileSync(path.resolve('supabase/functions/_shared/http.ts'), 'utf-8');
+assert(httpShared.includes('https://aimancrafts.github.io') && httpShared.includes('X-Content-Type-Options'), 'Edge HTTP helper enforces strict origin allowlist and nosniff headers');
 
 console.log('\n--- SUITE 3: Cloudflare Pages Edge Security Headers & Routing ---');
 

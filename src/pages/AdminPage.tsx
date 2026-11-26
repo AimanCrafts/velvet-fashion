@@ -55,7 +55,19 @@ export const AdminPage: React.FC = () => {
   const [staffSession, setStaffSession] = useState<{ email: string; role: string; token: string } | null>(() => {
     try {
       const saved = sessionStorage.getItem("vf_staff_session");
-      return saved ? JSON.parse(saved) : null;
+      if (!saved) return null;
+      const parsed: unknown = JSON.parse(saved);
+      if (
+        parsed &&
+        typeof parsed === "object" &&
+        !Array.isArray(parsed) &&
+        typeof (parsed as { email?: unknown }).email === "string" &&
+        typeof (parsed as { role?: unknown }).role === "string" &&
+        typeof (parsed as { token?: unknown }).token === "string"
+      ) {
+        return parsed as { email: string; role: string; token: string };
+      }
+      return null;
     } catch {
       return null;
     }

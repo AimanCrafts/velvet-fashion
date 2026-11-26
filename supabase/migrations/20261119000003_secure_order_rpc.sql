@@ -39,6 +39,10 @@ DECLARE
     v_existing_order RECORD;
 BEGIN
     IF p_idempotency_key IS NOT NULL AND length(trim(p_idempotency_key)) > 0 THEN
+        IF length(trim(p_idempotency_key)) > 64 THEN
+            RAISE EXCEPTION 'INVALID_IDEMPOTENCY_KEY: Key exceeds maximum allowed length';
+        END IF;
+
         SELECT * INTO v_existing_order 
         FROM public.orders 
         WHERE idempotency_key = trim(p_idempotency_key);
@@ -90,6 +94,14 @@ BEGIN
     v_clean_address := trim(p_address);
     IF length(v_clean_address) < 5 OR length(v_clean_address) > 300 THEN
         RAISE EXCEPTION 'INVALID_ADDRESS: Delivery address must be between 5 and 300 characters';
+    END IF;
+
+    IF p_customer_email IS NOT NULL AND length(trim(p_customer_email)) > 100 THEN
+        RAISE EXCEPTION 'INVALID_EMAIL: Email exceeds maximum allowed length';
+    END IF;
+
+    IF p_order_notes IS NOT NULL AND length(trim(p_order_notes)) > 500 THEN
+        RAISE EXCEPTION 'INVALID_NOTES: Order notes exceed maximum allowed length';
     END IF;
 
     IF p_payment_method NOT IN ('cod', 'bkash', 'nagad') THEN
@@ -221,7 +233,7 @@ BEGIN
         nullif(trim(p_customer_email), ''),
         v_zone.id,
         v_clean_address,
-        COALESCE(nullif(trim(p_time_slot), ''), 'Evening (3:00 PM - 8:00 PM)'),
+        COALESCE(nullif(left(trim(p_time_slot), 100), ''), 'Evening (3:00 PM - 8:00 PM)'),
         p_payment_method,
         nullif(trim(p_payment_trx_id), ''),
         v_subtotal,
@@ -229,9 +241,9 @@ BEGIN
         0,
         v_total,
         'new',
-        nullif(trim(p_order_notes), ''),
-        p_client_ip,
-        p_user_agent
+        nullif(left(trim(p_order_notes), 500), ''),
+        nullif(left(trim(p_client_ip), 100), ''),
+        nullif(left(trim(p_user_agent), 300), '')
     );
 
     INSERT INTO public.order_items (
@@ -305,14 +317,26 @@ DECLARE
     v_token_clean TEXT;
 BEGIN
     v_token_clean := trim(COALESCE(p_lookup_token, ''));
-    IF length(v_token_clean) < 6 THEN
+    IF length(v_token_clean) < 6 OR length(v_token_clean) > 64 THEN
         RAISE EXCEPTION 'INVALID_TOKEN: Valid order lookup token or order number is required';
     END IF;
 
-    SELECT * INTO v_order
-    FROM public.orders
-    WHERE lookup_token = v_token_clean
-       OR order_number = upper(v_token_clean);
+    IF v_token_clean ~* '^[a-f0-9]{32}$' THEN
+        SELECT * INTO v_order
+        FROM public.orders
+        WHERE lookup_token = lower(v_token_clean);
+    ELSE
+        IF p_phone_last4 IS NULL OR NOT trim(p_phone_last4) ~ '^[0-9]{4}$' THEN
+            RETURN jsonb_build_object(
+                'found', FALSE,
+                'error', 'Phone verification required for order number lookup'
+            );
+        END IF;
+
+        SELECT * INTO v_order
+        FROM public.orders
+        WHERE order_number = upper(v_token_clean);
+    END IF;
 
     IF NOT FOUND THEN
         RETURN jsonb_build_object(
@@ -321,9 +345,11 @@ BEGIN
         );
     END IF;
 
-    IF p_phone_last4 IS NOT NULL AND length(trim(p_phone_last4)) = 4 THEN
-        IF right(v_order.customer_phone, 4) <> trim(p_phone_last4) 
-           AND (v_order.customer_alt_phone IS NULL OR right(v_order.customer_alt_phone, 4) <> trim(p_phone_last4)) THEN
+    IF p_phone_last4 IS NOT NULL AND length(trim(p_phone_last4)) > 0 THEN
+        IF NOT trim(p_phone_last4) ~ '^[0-9]{4}$' OR (
+            right(v_order.customer_phone, 4) <> trim(p_phone_last4)
+            AND (v_order.customer_alt_phone IS NULL OR right(v_order.customer_alt_phone, 4) <> trim(p_phone_last4))
+        ) THEN
             RETURN jsonb_build_object(
                 'found', FALSE,
                 'error', 'Phone number verification failed'
@@ -438,59 +464,6 @@ BEGIN
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION public.verify_order_payment_admin(
-    p_order_id UUID,
-    p_notes TEXT DEFAULT NULL
-)
-RETURNS JSONB
-LANGUAGE plpgsql
-SECURITY DEFINER
-SET search_path = public, pg_temp
-AS $$
-DECLARE
-    v_order RECORD;
-BEGIN
-    IF NOT public.is_staff() THEN
-        RAISE EXCEPTION 'FORBIDDEN: Only authorized staff members can verify payments';
-    END IF;
-
-    SELECT * INTO v_order
-    FROM public.orders
-    WHERE id = p_order_id;
-
-    IF NOT FOUND THEN
-        RAISE EXCEPTION 'NOT_FOUND: Order % does not exist', p_order_id;
-    END IF;
-
-    UPDATE public.orders
-    SET payment_status = 'verified',
-        updated_at = NOW()
-    WHERE id = p_order_id;
-
-    INSERT INTO public.audit_logs (
-        actor_id,
-        action,
-        entity_type,
-        entity_id,
-        old_values,
-        new_values
-    ) VALUES (
-        auth.uid(),
-        'VERIFY_ORDER_PAYMENT',
-        'order',
-        p_order_id::text,
-        jsonb_build_object('payment_status', v_order.payment_status),
-        jsonb_build_object('payment_status', 'verified', 'trx_id', v_order.payment_trx_id, 'notes', p_notes)
-    );
-
-    RETURN jsonb_build_object(
-        'success', TRUE,
-        'order_id', p_order_id,
-        'payment_status', 'verified',
-        'order_number', v_order.order_number
-    );
-END;
-$$;
 CREATE OR REPLACE FUNCTION public.verify_order_payment_admin(
     p_order_id UUID,
     p_notes TEXT DEFAULT NULL

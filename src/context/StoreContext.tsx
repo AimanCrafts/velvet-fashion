@@ -150,8 +150,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     try {
       const stored = localStorage.getItem('vf_customer_orders');
       if (stored) {
-        const parsed: Order[] = JSON.parse(stored);
-        return [...parsed, ...initialOrders];
+        const parsed: unknown = JSON.parse(stored);
+        if (Array.isArray(parsed)) return [...(parsed as Order[]), ...initialOrders];
       }
     } catch {
       return initialOrders;
@@ -210,7 +210,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [wishlist, setWishlist] = useState<string[]>(() => {
     try {
       const stored = localStorage.getItem('vf_wishlist');
-      return stored ? JSON.parse(stored) : [];
+      if (!stored) return [];
+      const parsed: unknown = JSON.parse(stored);
+      return Array.isArray(parsed) ? parsed.filter((id): id is string => typeof id === 'string') : [];
     } catch {
       return [];
     }

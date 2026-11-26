@@ -8,6 +8,8 @@ import {
   validateBdPhone,
   validateEmail,
   validateTrxId,
+  checkRateLimit,
+  recordRateLimitAttempt,
 } from "../utils/security";
 import {
   ShieldCheck,
@@ -87,7 +89,17 @@ export const CheckoutPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setErrorMessage("");
+
+    if (!checkRateLimit("vf_checkout_page_submission", 5, 60000)) {
+      setErrorMessage(
+        isBn
+          ? "অনেকগুলো অনুরোধ পাঠানো হয়েছে। অনুগ্রহ করে ১ মিনিট অপেক্ষা করুন।"
+          : "Too many submission attempts. Please wait a minute before trying again."
+      );
+      return;
+    }
 
     if (honeypot) {
       setErrorMessage(
@@ -164,8 +176,9 @@ export const CheckoutPage: React.FC = () => {
     const sanitizedNotes = sanitizeInput(orderNotes, 300);
 
     setIsSubmitting(true);
+    recordRateLimitAttempt("vf_checkout_page_submission");
 
-    const idempotencyKey = `vf_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    const idempotencyKey = crypto.randomUUID();
 
     submitOrderSecure({
       customerName: sanitizedName,

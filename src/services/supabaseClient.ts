@@ -69,6 +69,13 @@ const getHeaders = (token?: string): Record<string, string> => {
   return headers;
 };
 
+const fetchWithTimeout = (url: string, init: RequestInit, timeoutMs = 15000): Promise<Response> => {
+  return fetch(url, {
+    ...init,
+    signal: typeof AbortSignal !== 'undefined' && 'timeout' in AbortSignal ? AbortSignal.timeout(timeoutMs) : undefined,
+  });
+};
+
 export interface RemoteOrderResult {
   success: boolean;
   order_id: string;
@@ -164,7 +171,7 @@ export async function createOrderRemote(payload: {
 
   const endpoint = `${SUPABASE_URL}/functions/v1/create-order`;
 
-  const response = await fetch(endpoint, {
+  const response = await fetchWithTimeout(endpoint, {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({
@@ -202,7 +209,7 @@ export async function getOrderStatusRemote(
 
   const endpoint = `${SUPABASE_URL}/functions/v1/order-lookup`;
 
-  const response = await fetch(endpoint, {
+  const response = await fetchWithTimeout(endpoint, {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({
@@ -225,17 +232,13 @@ export async function fetchProductsRemote(): Promise<Product[]> {
 
   const endpoint = `${SUPABASE_URL}/rest/v1/products?select=*,product_variants_public(*)&is_published=eq.true&order=created_at.asc`;
 
-  const response = await fetch(endpoint, {
+  const response = await fetchWithTimeout(endpoint, {
     method: 'GET',
     headers: getHeaders(),
   });
 
   if (!response.ok) {
-    const fallbackEndpoint = `${SUPABASE_URL}/rest/v1/products?select=*,product_variants(*)&is_published=eq.true&order=created_at.asc`;
-    const fallbackRes = await fetch(fallbackEndpoint, { method: 'GET', headers: getHeaders() });
-    if (!fallbackRes.ok) return [];
-    const rawFallback = (await fallbackRes.json()) as RawProductRecord[];
-    return mapRawProducts(rawFallback);
+    return [];
   }
 
   const raw = (await response.json()) as RawProductRecord[];
@@ -286,7 +289,7 @@ export async function fetchDeliveryZonesRemote(): Promise<DeliveryZone[]> {
   if (!isSupabaseConfigured()) return [];
 
   const endpoint = `${SUPABASE_URL}/rest/v1/delivery_zones?is_active=eq.true&order=display_order.asc`;
-  const response = await fetch(endpoint, { method: 'GET', headers: getHeaders() });
+  const response = await fetchWithTimeout(endpoint, { method: 'GET', headers: getHeaders() });
   if (!response.ok) return [];
 
   const raw = (await response.json()) as RawDeliveryZoneRecord[];
@@ -309,7 +312,7 @@ export async function fetchSiteSettingsRemote(): Promise<Partial<SiteSettings> |
   if (!isSupabaseConfigured()) return null;
 
   const endpoint = `${SUPABASE_URL}/rest/v1/site_settings?key=eq.business_profile&select=*`;
-  const response = await fetch(endpoint, { method: 'GET', headers: getHeaders() });
+  const response = await fetchWithTimeout(endpoint, { method: 'GET', headers: getHeaders() });
   if (!response.ok) return null;
 
   const raw = await response.json();
@@ -340,7 +343,7 @@ export async function signInStaff(email: string, password: string): Promise<{
 
   const endpoint = `${SUPABASE_URL}/auth/v1/token?grant_type=password`;
 
-  const response = await fetch(endpoint, {
+  const response = await fetchWithTimeout(endpoint, {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ email, password }),
@@ -361,7 +364,7 @@ export async function signInStaff(email: string, password: string): Promise<{
 export async function fetchStaffProfile(userId: string, accessToken: string): Promise<Database['public']['Tables']['profiles']['Row'] | null> {
   const endpoint = `${SUPABASE_URL}/rest/v1/profiles?id=eq.${encodeURIComponent(userId)}&select=*`;
 
-  const response = await fetch(endpoint, {
+  const response = await fetchWithTimeout(endpoint, {
     method: 'GET',
     headers: getHeaders(accessToken),
   });
@@ -376,7 +379,7 @@ export async function fetchAdminOrdersRemote(accessToken: string): Promise<Admin
   if (!isSupabaseConfigured()) return [];
 
   const endpoint = `${SUPABASE_URL}/rest/v1/orders?select=*,order_items(*)&order=created_at.desc`;
-  const response = await fetch(endpoint, {
+  const response = await fetchWithTimeout(endpoint, {
     method: 'GET',
     headers: getHeaders(accessToken),
   });
@@ -393,7 +396,7 @@ export async function fetchAdminLotsRemote(accessToken: string): Promise<LotReco
   if (!isSupabaseConfigured()) return [];
 
   const endpoint = `${SUPABASE_URL}/rest/v1/inventory_lots?select=*&order=received_date.desc`;
-  const response = await fetch(endpoint, {
+  const response = await fetchWithTimeout(endpoint, {
     method: 'GET',
     headers: getHeaders(accessToken),
   });
@@ -435,7 +438,7 @@ export async function updateOrderStatusRemote(
   }
 
   const endpoint = `${SUPABASE_URL}/rest/v1/rpc/update_order_status_admin`;
-  const response = await fetch(endpoint, {
+  const response = await fetchWithTimeout(endpoint, {
     method: 'POST',
     headers: getHeaders(accessToken),
     body: JSON.stringify({
@@ -463,7 +466,7 @@ export async function verifyOrderPaymentRemote(
   }
 
   const endpoint = `${SUPABASE_URL}/rest/v1/rpc/verify_order_payment_admin`;
-  const response = await fetch(endpoint, {
+  const response = await fetchWithTimeout(endpoint, {
     method: 'POST',
     headers: getHeaders(accessToken),
     body: JSON.stringify({
@@ -496,7 +499,7 @@ export async function createInventoryLotRemote(
   }
 
   const endpoint = `${SUPABASE_URL}/rest/v1/inventory_lots`;
-  const response = await fetch(endpoint, {
+  const response = await fetchWithTimeout(endpoint, {
     method: 'POST',
     headers: {
       ...getHeaders(accessToken),
@@ -530,7 +533,7 @@ export async function updateSiteSettingsRemote(
   }
 
   const endpoint = `${SUPABASE_URL}/rest/v1/site_settings?key=eq.business_profile`;
-  const response = await fetch(endpoint, {
+  const response = await fetchWithTimeout(endpoint, {
     method: 'PATCH',
     headers: getHeaders(accessToken),
     body: JSON.stringify({
