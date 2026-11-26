@@ -72,17 +72,17 @@ export const CategoryTiles: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b border-[#ECE4D4]">
         <div>
-          <p className="text-[10px] font-bold text-[#88652A] uppercase tracking-[0.25em] mb-1.5">
+          <p className="text-xs font-bold text-[#88652A] uppercase tracking-[0.25em] mb-1.5">
             {isBn ? "বিভাগ অনুযায়ী দেখুন" : "DEPARTMENTS"}
           </p>
-          <h2 className="font-['Playfair_Display'] text-2xl sm:text-3xl font-normal text-[#24030B]">
+          <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl font-normal text-[#24030B]">
             {isBn ? "প্রতিটি উপলক্ষের জন্য বাছাইকৃত" : "Curated Wardrobes"}
           </h2>
         </div>
         <button
           type="button"
           onClick={() => handleSelect("all")}
-          className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#3E0713] hover:text-[#88652A] transition"
+          className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[#3E0713] hover:text-[#88652A] transition"
         >
           <span>{isBn ? "সব কালেকশন" : "View All Departments"}</span>
           <ArrowUpRight className="w-3.5 h-3.5" />
@@ -115,10 +115,10 @@ export const CategoryTiles: React.FC = () => {
             </span>
 
             <div className="absolute inset-x-0 bottom-0 p-5">
-              <p className="text-[10px] text-[#E6C87C] font-semibold uppercase tracking-[0.16em] mb-1">
+              <p className="text-xs text-[#E6C87C] font-semibold uppercase tracking-[0.16em] mb-1">
                 {isBn ? cat.subtitle_bn : cat.subtitle_en}
               </p>
-              <h3 className="font-['Playfair_Display'] text-xl text-white group-hover:text-[#F4E2B5] transition-colors">
+              <h3 className="font-['Playfair_Display'] text-2xl text-white group-hover:text-[#F4E2B5] transition-colors">
                 {isBn ? cat.title_bn : cat.title_en}
               </h3>
             </div>

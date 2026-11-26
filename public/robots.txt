@@ -1,4 +1,4 @@
-# Velvet Fashion Bangladesh — Production Robots Policy
+# Velvet Fashion Bangladesh — Robots Policy
 User-agent: *
 Disallow: /admin
 Disallow: /#/admin
@@ -9,18 +9,7 @@ Disallow: /#/order/
 Disallow: /api/
 Allow: /
 Allow: /shop
+Allow: /lookbook
 Allow: /product/
 
-# Prevent malicious AI scrapers from aggressive high-concurrency crawling
-User-agent: GPTBot
-Disallow: /admin
-Disallow: /checkout
-Disallow: /order/
-
-User-agent: CCBot
-Disallow: /admin
-Disallow: /checkout
-Disallow: /order/
-
 Sitemap: https://velvetfashion.com.bd/sitemap.xml
-

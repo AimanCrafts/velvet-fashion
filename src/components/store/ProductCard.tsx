@@ -208,7 +208,7 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       {/* Product Metadata */}
       <div className="pt-3.5 space-y-1">
         <div className="flex items-center justify-between gap-2">
-          <p className="text-[10px] uppercase tracking-[0.18em] text-[#88652A] font-semibold truncate">
+          <p className="text-xs uppercase tracking-[0.14em] text-[#88652A] font-semibold truncate">
             {isBn ? product.collection_bn : product.collection}
           </p>
           <div className="flex items-center gap-1 shrink-0">
@@ -223,16 +223,16 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           </div>
         </div>
 
-        <h3 className="font-['Playfair_Display'] text-[15px] font-normal leading-snug text-[#24030B] group-hover:text-[#3E0713] transition line-clamp-1">
+        <h3 className="font-['Playfair_Display'] text-base font-normal leading-snug text-[#24030B] group-hover:text-[#3E0713] transition line-clamp-1">
           {isBn ? product.name_bn : product.name_en}
         </h3>
 
-        <p className="text-[11px] text-stone-500 truncate">
+        <p className="text-xs text-stone-500 truncate">
           {isBn ? product.fabric_bn : product.fabric_en}
         </p>
 
         <div className="pt-0.5 flex items-baseline justify-between gap-2">
-          <span className="text-sm font-bold text-[#3E0713]">
+          <span className="text-base font-bold text-[#3E0713]">
             {hasRange
               ? `${formatBdt(minPrice, isBn ? "bn" : "en")} – ${formatBdt(maxPrice, isBn ? "bn" : "en")}`
               : formatBdt(minPrice, isBn ? "bn" : "en")}

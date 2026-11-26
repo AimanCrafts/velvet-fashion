@@ -33,7 +33,7 @@ const STORIES: EditorialStory[] = [
     fabricNote_bn: "৮৫% সিল্ক-টাচ রয়্যাল ভেলভেট • মাইক্রো-ভেলভেট ও টিস্যু অর্গানজা",
     image:
       "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1200&q=85",
-    productIds: ["prod-01", "prod-03"],
+    productIds: ["prod-01", "prod-03", "prod-07", "prod-11"],
   },
   {
     number: "02",
@@ -49,7 +49,7 @@ const STORIES: EditorialStory[] = [
     fabricNote_bn: "র সিল্ক-কটন ব্লেন্ড • হেভি ভেলভেট ও অ্যান্টিক পিতল",
     image:
       "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=85",
-    productIds: ["prod-02", "prod-04"],
+    productIds: ["prod-02", "prod-04", "prod-09", "prod-10"],
   },
   {
     number: "03",
@@ -65,7 +65,7 @@ const STORIES: EditorialStory[] = [
     fabricNote_bn: "৭০% গ্রেড-এ কাশ্মীরি • ১০০% সুতি-সিল্ক আরামদায়ক লাইনিং",
     image:
       "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&w=1200&q=85",
-    productIds: ["prod-05", "prod-06"],
+    productIds: ["prod-05", "prod-06", "prod-14", "prod-15"],
   },
 ];
 

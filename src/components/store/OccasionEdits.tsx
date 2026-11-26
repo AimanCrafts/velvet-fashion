@@ -77,14 +77,14 @@ export const OccasionEdits: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#88652A] mb-1.5">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#88652A] mb-1.5">
               {isBn ? "উপলক্ষ অনুযায়ী বাছাই" : "SHOP BY OCCASION"}
             </p>
-            <h2 className="font-['Playfair_Display'] text-2xl sm:text-3xl text-[#24030B]">
+            <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl text-[#24030B]">
               {isBn ? "অনুষ্ঠান অনুযায়ী স্টাইল এডিট" : "Dressed for the Moment"}
             </h2>
           </div>
-          <p className="text-xs text-stone-600 max-w-md">
+          <p className="text-sm text-stone-600 max-w-md">
             {isBn
               ? "আপনার অনুষ্ঠানের আবহ অনুযায়ী সরাসরি কালেকশন ফিল্টার করুন — বিয়ে থেকে ঘরোয়া দাওয়াত।"
               : "Browse our collection by context — from grand Dhaka receptions to understated winter gatherings."}
@@ -109,17 +109,17 @@ export const OccasionEdits: React.FC = () => {
               </div>
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#88652A] block mb-1">
+                  <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#88652A] block mb-1">
                     {isBn ? item.tag_bn : item.tag_en}
                   </span>
-                  <h3 className="font-['Playfair_Display'] text-lg text-[#24030B] group-hover:text-[#3E0713] mb-1.5">
+                  <h3 className="font-['Playfair_Display'] text-xl text-[#24030B] group-hover:text-[#3E0713] mb-1.5">
                     {isBn ? item.title_bn : item.title_en}
                   </h3>
-                  <p className="text-xs text-stone-600 leading-relaxed">
+                  <p className="text-sm text-stone-600 leading-relaxed">
                     {isBn ? item.desc_bn : item.desc_en}
                   </p>
                 </div>
-                <div className="pt-4 mt-4 border-t border-[#F0EAE0] flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-[#3E0713]">
+                <div className="pt-4 mt-4 border-t border-[#F0EAE0] flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#3E0713]">
                   <span>{isBn ? "এডিট দেখুন" : "Shop Edit"}</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>

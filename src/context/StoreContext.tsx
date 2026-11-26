@@ -20,6 +20,7 @@ import {
   initialOrders,
   initialSiteSettings,
 } from '../data/mockData';
+import { additionalProducts } from '../data/additionalProducts';
 import {
   isSupabaseConfigured,
   createOrderRemote,
@@ -149,7 +150,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setSortBy('featured');
   };
 
-  const [products, setProducts] = useState<Product[]>(sampleProducts);
+  const [products, setProducts] = useState<Product[]>([...sampleProducts, ...additionalProducts]);
   const [activeDeliveryZones, setActiveDeliveryZones] = useState<DeliveryZone[]>(deliveryZones);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [orders, setOrders] = useState<Order[]>(() => {
@@ -180,7 +181,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
       if (prodRes.status === 'fulfilled' && prodRes.value && prodRes.value.length > 0) {
         const enriched = prodRes.value.map((remoteProd) => {
-          const fallback = sampleProducts.find((sp) => sp.id === remoteProd.id);
+          const fallback = [...sampleProducts, ...additionalProducts].find((sp) => sp.id === remoteProd.id);
           return {
             ...remoteProd,
             additionalImages: remoteProd.additionalImages ?? fallback?.additionalImages,

@@ -20,7 +20,7 @@ export const HomePage: React.FC = () => {
 
       <div className="pb-12">
         <ProductGrid
-          limit={6}
+          limit={9}
           showFilterToolbar={false}
           title_en="Seasonal Signature Pieces"
           title_bn="শীতকালীন বিশেষ উৎসব কালেকশন"

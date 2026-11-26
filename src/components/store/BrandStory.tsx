@@ -38,7 +38,7 @@ export const BrandStory: React.FC = () => {
         {/* Right Narrative (7 cols) */}
         <div className="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-between space-y-6">
           <div className="space-y-4">
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#88652A] block">
+            <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#88652A] block">
               {isBn ? "আমাদের ঐতিহ্য ও কারিগরি" : "HERITAGE & TAILORING JOURNAL"}
             </span>
 
@@ -56,7 +56,7 @@ export const BrandStory: React.FC = () => {
               )}
             </h2>
 
-            <p className="text-sm text-stone-600 leading-relaxed">
+            <p className="text-base text-stone-600 leading-relaxed">
               {isBn
                 ? "ভেলভেট ফ্যাশন বাংলাদেশের রুচিশীল ক্রেতাদের জন্য তৈরি করেছে সীমিত সংস্করণের মখমল, সিল্ক এবং জারদৌসি কালেকশন। নারায়ণগঞ্জ ও পুরান ঢাকার দক্ষ কারিগরদের হাতে প্রতিটি পোশাক তৈরি ও মান যাচাই করা হয়।"
                 : "Velvet Fashion unites heavy silk-blend velvet, breathable Dhaka-loom cotton-silks, and subtle hand-worked zardozi in small, traceable seasonal lots—built for weddings, Eid gatherings, and winter evenings."}
@@ -67,10 +67,10 @@ export const BrandStory: React.FC = () => {
             <div className="p-4 bg-[#FAF8F5] border border-[#ECE4D4] flex items-start gap-3">
               <ShieldCheck className="w-4 h-4 text-[#88652A] shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-xs font-bold text-stone-900">
+                <h4 className="text-sm font-bold text-stone-900">
                   {isBn ? "নিবন্ধিত ডিজিটাল কমার্স" : "Registered BD Boutique"}
                 </h4>
-                <p className="text-[11px] text-stone-500 mt-0.5 font-mono">
+                <p className="text-xs text-stone-500 mt-0.5 font-mono">
                   {siteSettings.tradeLicenseNo}
                 </p>
               </div>
@@ -79,10 +79,10 @@ export const BrandStory: React.FC = () => {
             <div className="p-4 bg-[#FAF8F5] border border-[#ECE4D4] flex items-start gap-3">
               <MessageCircle className="w-4 h-4 text-[#25D366] shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-xs font-bold text-stone-900">
+                <h4 className="text-sm font-bold text-stone-900">
                   {isBn ? "হোয়াটসঅ্যাপ স্টাইলিং সহায়তা" : "Personal Fit Concierge"}
                 </h4>
-                <p className="text-[11px] text-stone-500 mt-0.5 font-mono">
+                <p className="text-xs text-stone-500 mt-0.5 font-mono">
                   {siteSettings.supportWhatsApp}
                 </p>
               </div>

@@ -1,6 +1,4 @@
--- ==============================================================================
--- Velvet Fashion — Row-Level Security Policies
--- ==============================================================================
+-- Row-level security policies and public catalog view
 
 -- 1. Enable RLS on All Tables
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;

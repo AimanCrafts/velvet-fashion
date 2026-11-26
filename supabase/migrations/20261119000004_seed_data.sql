@@ -1,7 +1,4 @@
--- ==============================================================================
--- Velvet Fashion — Baseline Seed Data (Migration 004)
--- Inserts delivery zones, luxury catalog, and site settings.
--- ==============================================================================
+-- Baseline seed data for delivery zones, initial catalog, and store settings
 
 -- 1. Insert Delivery Zones
 INSERT INTO public.delivery_zones (id, name_en, name_bn, fee_bdt, free_above_bdt, eta_en, eta_bn, display_order)

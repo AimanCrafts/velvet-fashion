@@ -14,7 +14,6 @@ import { AdminPage } from "./components/admin/AdminPage";
 import { CartDrawer } from "./components/checkout/CartDrawer";
 import { ProductQuickViewModal } from "./components/store/ProductQuickViewModal";
 import { DesignSystemModal } from "./components/guidelines/DesignSystemModal";
-import { DemoDock } from "./components/guidelines/DemoDock";
 import { Toast } from "./components/ui/Toast";
 import { ErrorBoundary } from "./components/ui/ErrorBoundary";
 
@@ -75,7 +74,6 @@ function StorefrontShell() {
       <CartDrawer />
       <ProductQuickViewModal />
       <DesignSystemModal />
-      <DemoDock />
 
       {!isAdmin && !isCheckout && <Footer />}
     </div>

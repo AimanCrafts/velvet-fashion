@@ -1,7 +1,4 @@
--- ==============================================================================
--- Velvet Fashion — Production PostgreSQL Schema (Migration 001)
--- Target Platform: Supabase / PostgreSQL 15+
--- ==============================================================================
+-- Velvet Fashion production schema (initial migration)
 
 -- 1. Enable Required Extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

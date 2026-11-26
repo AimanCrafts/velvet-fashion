@@ -1,6 +1,4 @@
--- ==============================================================================
--- Velvet Fashion — Order Processing & Transaction Procedures
--- ==============================================================================
+-- Order processing and administrative RPC procedures
 
 -- 1. Order Creation Procedure
 CREATE OR REPLACE FUNCTION public.create_order_secure(

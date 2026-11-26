@@ -153,7 +153,7 @@ export const HeroBanner: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Editorial Copy (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.26em] text-[#E6C87C] font-semibold">
+              <div className="flex items-center gap-3 text-xs uppercase tracking-[0.26em] text-[#E6C87C] font-semibold">
                 <span className="w-8 h-[1px] bg-[#C5A059]" />
                 <span>{isBn ? currentSlide.eyebrow_bn : currentSlide.eyebrow_en}</span>
               </div>
@@ -174,7 +174,7 @@ export const HeroBanner: React.FC = () => {
                 )}
               </h1>
 
-              <p className="text-sm sm:text-base text-[#ECE4D4]/90 max-w-xl leading-relaxed font-light">
+              <p className="text-base sm:text-lg text-[#ECE4D4]/90 max-w-xl leading-relaxed font-light">
                 {isBn ? currentSlide.copy_bn : currentSlide.copy_en}
               </p>
 
@@ -252,16 +252,16 @@ export const HeroBanner: React.FC = () => {
                       {isBn ? currentSlide.featureTag_bn : currentSlide.featureTag_en}
                     </span>
                   </div>
-                  <div className="pt-3 pb-1 px-1 flex items-center justify-between gap-2">
+                  <div className="pt-3.5 pb-1 px-1 flex items-center justify-between gap-2">
                     <div className="min-w-0">
-                      <p className="text-[10px] uppercase tracking-wider text-[#88652A] font-semibold truncate">
+                      <p className="text-xs uppercase tracking-wider text-[#88652A] font-semibold truncate">
                         {isBn ? featuredProduct.category_bn : featuredProduct.category}
                       </p>
-                      <h3 className="font-['Playfair_Display'] text-sm text-[#24030B] truncate">
+                      <h3 className="font-['Playfair_Display'] text-base text-[#24030B] truncate">
                         {isBn ? featuredProduct.name_bn : featuredProduct.name_en}
                       </h3>
                     </div>
-                    <span className="text-xs font-bold text-[#3E0713] shrink-0">
+                    <span className="text-sm font-bold text-[#3E0713] shrink-0">
                       {formatBdt(featuredProduct.variants[0].priceBdt, isBn ? "bn" : "en")}
                     </span>
                   </div>
@@ -274,14 +274,14 @@ export const HeroBanner: React.FC = () => {
 
       {/* Crisp 4-Pillar Service Bar */}
       <div className="bg-white border-b border-[#ECE4D4] py-4">
-        <div className="container mx-auto px-4 grid grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        <div className="container mx-auto px-4 grid grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
           <div className="flex items-center gap-3">
             <Truck className="w-4 h-4 text-[#88652A] shrink-0" />
             <div>
               <p className="font-semibold text-[#24030B]">
                 {isBn ? "ঢাকায় ২৪ ঘণ্টায় ডেলিভারি" : "24h Dhaka Dispatch"}
               </p>
-              <p className="text-[11px] text-stone-500">
+              <p className="text-xs text-stone-500">
                 {isBn ? "সারাদেশে ৪৮-৭২ ঘণ্টায়" : "48–72h across 64 districts"}
               </p>
             </div>
@@ -293,7 +293,7 @@ export const HeroBanner: React.FC = () => {
               <p className="font-semibold text-[#24030B]">
                 {isBn ? "ক্যাশ অন ডেলিভারি ও বিকাশ" : "COD, bKash & Nagad"}
               </p>
-              <p className="text-[11px] text-stone-500">
+              <p className="text-xs text-stone-500">
                 {isBn ? "পণ্য দেখে মূল্য পরিশোধ" : "Inspect parcel at doorstep"}
               </p>
             </div>
@@ -305,7 +305,7 @@ export const HeroBanner: React.FC = () => {
               <p className="font-semibold text-[#24030B]">
                 {isBn ? "৭ দিনের সাইজ এক্সচেঞ্জ" : "7-Day Size Exchange"}
               </p>
-              <p className="text-[11px] text-stone-500">
+              <p className="text-xs text-stone-500">
                 {isBn ? "সহজ ও দ্রুত পরিবর্তন সুবিধা" : "Hassle-free fit guarantee"}
               </p>
             </div>
@@ -317,7 +317,7 @@ export const HeroBanner: React.FC = () => {
               <p className="font-semibold text-[#24030B]">
                 {isBn ? "সরকারি নীতিমালা অনুমোদিত" : "MoC 2021 Compliant"}
               </p>
-              <p className="text-[11px] text-stone-500">
+              <p className="text-xs text-stone-500">
                 {isBn ? "নিবন্ধিত ও বিশ্বস্ত ব্র্যান্ড" : "Verified BD e-Commerce"}
               </p>
             </div>

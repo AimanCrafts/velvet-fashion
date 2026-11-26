@@ -6,7 +6,7 @@ import type { Audience } from "../../types";
 
 export const Footer: React.FC = () => {
   const { navigate } = useRouter();
-  const { isBn, siteSettings, resetFilters, setActiveAudience } = useStore();
+  const { isBn, siteSettings, resetFilters, setActiveAudience, setIsDesignSystemOpen } = useStore();
 
   const goDepartment = (aud: Audience) => {
     resetFilters();
@@ -94,6 +94,15 @@ export const Footer: React.FC = () => {
                 <Link to="/track" className="hover:text-white transition">
                   {isBn ? "অর্ডার ট্র্যাক করুন" : "Track Order"}
                 </Link>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => setIsDesignSystemOpen(true)}
+                  className="hover:text-white transition"
+                >
+                  {isBn ? "আতেলিয়ে মানদণ্ড" : "Atelier Standards"}
+                </button>
               </li>
             </ul>
           </div>

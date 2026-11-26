@@ -128,10 +128,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 pb-4 border-b border-[#ECE4D4]">
         <div>
-          <p className="text-[10px] font-bold text-[#88652A] uppercase tracking-[0.25em] mb-1.5">
+          <p className="text-xs font-bold text-[#88652A] uppercase tracking-[0.22em] mb-1.5">
             {isBn ? resolvedSubtitleBn : subtitle_en ?? defaultSubtitleEn}
           </p>
-          <h2 className="font-['Playfair_Display'] text-2xl sm:text-3xl font-normal text-[#24030B]">
+          <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl font-normal text-[#24030B]">
             {isBn ? resolvedTitleBn : title_en ?? defaultTitleEn}
           </h2>
         </div>

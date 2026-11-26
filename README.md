@@ -91,7 +91,7 @@ Visit `http://localhost:5173` to preview locally.
 │   ├── components/
 │   │   ├── admin/          # Staff fulfillment hub, print slips, and lot intake
 │   │   ├── checkout/       # Cart drawer, checkout views, and order confirmation
-│   │   ├── guidelines/     # Design system reference and demo dock controls
+│   │   ├── guidelines/     # Atelier brand standards reference modal
 │   │   ├── layout/         # Mega-menu navbar, predictive search, and footer
 │   │   ├── product/        # Product detail view and size guide modal
 │   │   ├── store/          # Hero slider, category tiles, occasion edits, product cards
@@ -105,7 +105,7 @@ Visit `http://localhost:5173` to preview locally.
 │   └── utils/              # BDT/Bengali formatters and XSS/validation helpers
 └── supabase/
     ├── functions/          # Edge Functions (create-order, order-lookup)
-    └── migrations/         # Sequential PostgreSQL migrations (001–006)
+    └── migrations/         # Sequential PostgreSQL migrations
 ```
 
 ---
