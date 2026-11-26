@@ -165,24 +165,24 @@ export async function createOrderRemote(payload: {
     throw new Error('SUPABASE_NOT_CONFIGURED');
   }
 
-  const endpoint = `${SUPABASE_URL}/rest/v1/rpc/create_order_secure`;
+  const endpoint = `${SUPABASE_URL}/functions/v1/create-order`;
 
   const response = await fetch(endpoint, {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({
-      p_customer_name: payload.customer_name,
-      p_customer_phone: payload.customer_phone,
-      p_customer_email: payload.customer_email || null,
-      p_zone_id: payload.zone_id,
-      p_address: payload.address,
-      p_time_slot: payload.time_slot,
-      p_payment_method: payload.payment_method,
-      p_payment_trx_id: payload.payment_trx_id || null,
-      p_order_notes: payload.order_notes || null,
-      p_items: payload.items,
-      p_customer_alt_phone: payload.customer_alt_phone || null,
-      p_idempotency_key: payload.idempotency_key || null,
+      customer_name: payload.customer_name,
+      customer_phone: payload.customer_phone,
+      customer_email: payload.customer_email || null,
+      zone_id: payload.zone_id,
+      address: payload.address,
+      time_slot: payload.time_slot,
+      payment_method: payload.payment_method,
+      payment_trx_id: payload.payment_trx_id || null,
+      order_notes: payload.order_notes || null,
+      items: payload.items,
+      customer_alt_phone: payload.customer_alt_phone || null,
+      idempotency_key: payload.idempotency_key || null,
     }),
   });
 
@@ -206,14 +206,14 @@ export async function getOrderStatusRemote(
     throw new Error('SUPABASE_NOT_CONFIGURED');
   }
 
-  const endpoint = `${SUPABASE_URL}/rest/v1/rpc/get_order_status_secure`;
+  const endpoint = `${SUPABASE_URL}/functions/v1/order-lookup`;
 
   const response = await fetch(endpoint, {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({
-      p_lookup_token: lookupToken,
-      p_phone_last4: phoneLast4 || null,
+      lookup_token: lookupToken,
+      phone_last4: phoneLast4 || null,
     }),
   });
 
