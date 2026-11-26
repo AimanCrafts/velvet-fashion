@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useStore } from "../../context/StoreContext";
 import { formatBdt, buildWhatsAppUrl } from "../../utils/formatters";
 import type { Product, ProductVariant } from "../../types";
-import { X, ShoppingBag, MessageCircle, Sparkles, Ruler, Boxes, ShieldCheck } from "lucide-react";
+import { useRouter } from "../../router/Router";
+import { X, ShoppingBag, MessageCircle, Sparkles, Ruler, Boxes, ShieldCheck, ArrowUpRight } from "lucide-react";
 
 export const ProductQuickViewModal: React.FC = () => {
   const { selectedProductForQuickView } = useStore();
@@ -17,6 +18,7 @@ export const ProductQuickViewModal: React.FC = () => {
 };
 
 const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
+  const { navigate } = useRouter();
   const { setSelectedProductForQuickView, addToCart, isBn, siteSettings } = useStore();
 
   useEffect(() => {
@@ -75,11 +77,11 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-fade-in">
-      <div className="relative bg-[#FAF8F5] rounded-2xl max-w-4xl w-full border border-[#ECE4D4] shadow-2xl overflow-hidden my-4">
+      <div className="relative bg-[#FAF8F5] max-w-4xl w-full border border-[#ECE4D4] shadow-2xl overflow-hidden my-4">
         {/* Close Button */}
         <button
           onClick={() => setSelectedProductForQuickView(null)}
-          className="absolute top-4 end-4 z-20 bg-white/80 hover:bg-white text-stone-800 p-1.5 rounded-full shadow-md transition"
+          className="absolute top-4 end-4 z-20 bg-white/90 hover:bg-white text-stone-800 p-1.5 border border-[#ECE4D4] shadow-sm transition"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />
@@ -87,13 +89,13 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-12">
           {/* Left Column (5 cols): Photo & Gallery */}
-          <div className="md:col-span-5 bg-[#F7F3EA] p-4 flex flex-col justify-between">
-            <div className="relative aspect-[3/4] rounded-xl overflow-hidden border border-[#ECE4D4] bg-white shadow-xs">
+          <div className="md:col-span-5 bg-[#F4EFE6] p-4 flex flex-col justify-between">
+            <div className="relative aspect-[3/4] overflow-hidden border border-[#ECE4D4] bg-white">
               <img
                 src={activeImage}
                 alt={isBn ? product.name_bn : product.name_en}
                 onError={(e) => {
-                  e.currentTarget.src = "/brand/velvet_emblem.jpg";
+                  e.currentTarget.src = "./brand/velvet_emblem.jpg";
                 }}
                 className="w-full h-full object-cover object-center"
               />
@@ -305,11 +307,12 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
               </div>
             </div>
 
-            {/* Actions: Add to Bag + WhatsApp Concierge */}
-            <div className="pt-3 border-t border-[#ECE4D4] space-y-2">
+            {/* Actions: Add to Bag + Full Details + WhatsApp Concierge */}
+            <div className="pt-3 border-t border-[#ECE4D4] space-y-2.5">
               <div className="flex items-center gap-2">
-                <div className="flex items-center border border-stone-300 rounded-full bg-white px-2 py-1">
+                <div className="flex items-center border border-[#DDD1BC] bg-white px-2 py-1.5">
                   <button
+                    type="button"
                     onClick={() => setSelectedQty(Math.max(1, selectedQty - 1))}
                     className="px-2 text-stone-600 hover:text-black font-bold"
                   >
@@ -317,6 +320,7 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
                   </button>
                   <span className="px-2 text-xs font-bold font-mono">{selectedQty}</span>
                   <button
+                    type="button"
                     onClick={() => setSelectedQty(Math.min(selectedVariant.stockQty, selectedQty + 1))}
                     className="px-2 text-stone-600 hover:text-black font-bold"
                   >
@@ -328,22 +332,36 @@ const QuickViewContent: React.FC<{ product: Product }> = ({ product }) => {
                   type="button"
                   disabled={selectedVariant.stockQty <= 0}
                   onClick={handleAddToCart}
-                  className="flex-1 bg-[#3E0713] hover:bg-[#520B1C] text-[#FAF8F5] py-3 rounded-full text-xs font-bold uppercase tracking-wider transition flex items-center justify-center gap-2 shadow-md disabled:opacity-40 active:scale-95"
+                  className="flex-1 bg-[#3E0713] hover:bg-[#520B1C] text-[#FAF8F5] py-3 text-xs font-bold uppercase tracking-[0.16em] transition flex items-center justify-center gap-2 disabled:opacity-40 active:scale-95"
                 >
                   <ShoppingBag className="w-4 h-4 text-[#C5A059]" />
                   <span>{isBn ? "ব্যাগ-এ যোগ করুন" : "Add to Shopping Bag"}</span>
                 </button>
               </div>
 
-              <a
-                href={waUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full border border-[#25D366] text-[#128C7E] hover:bg-[#25D366]/10 py-2.5 rounded-full text-xs font-semibold flex items-center justify-center gap-2 transition"
-              >
-                <MessageCircle className="w-4 h-4 text-[#25D366]" />
-                <span>{isBn ? "হোয়াটসঅ্যাপে সাইজ বা অর্ডার পরামর্শ" : "Ask Concierge on WhatsApp"}</span>
-              </a>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedProductForQuickView(null);
+                    navigate(`/product/${product.id}`);
+                  }}
+                  className="border border-[#3E0713] text-[#3E0713] hover:bg-[#3E0713] hover:text-white py-2.5 text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition"
+                >
+                  <span>{isBn ? "বিস্তারিত দেখুন" : "Full Product Details"}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </button>
+
+                <a
+                  href={waUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-[#25D366] text-[#128C7E] hover:bg-[#25D366]/10 py-2.5 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition"
+                >
+                  <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                  <span>{isBn ? "হোয়াটসঅ্যাপ পরামর্শ" : "WhatsApp Concierge"}</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

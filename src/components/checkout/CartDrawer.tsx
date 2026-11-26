@@ -239,21 +239,23 @@ export const CartDrawer: React.FC = () => {
 
               <button
                 onClick={handleProceed}
-                className="w-full bg-[#3E0713] hover:bg-[#520B1C] text-[#FAF8F5] py-3.5 rounded-full text-xs font-bold tracking-wider uppercase transition flex items-center justify-center gap-2 shadow-md active:scale-95"
+                className="w-full bg-[#3E0713] hover:bg-[#520B1C] text-[#FAF8F5] py-3.5 text-xs font-bold tracking-[0.18em] uppercase transition flex items-center justify-center gap-2 active:scale-95"
               >
                 <span>
                   {isBn
-                    ? "অর্ডার সম্পন্ন করতে এগিয়ে যান (COD / বিকাশ)"
-                    : "Proceed to Checkout (COD / bKash)"}
+                    ? "অর্ডার সম্পন্ন করুন (COD / বিকাশ)"
+                    : "Proceed to Checkout"}
                 </span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              <p className="text-[10px] text-center text-stone-500 font-medium">
-                {isBn
-                  ? "অ্যাকাউন্ট তৈরির প্রয়োজন নেই • পণ্য দেখে ক্যাশ অন ডেলিভারিতে মূল্য পরিশোধ"
-                  : "No account required • Cash on Delivery with full inspection"}
-              </p>
+              <div className="flex items-center justify-center gap-2 pt-1 text-[10px] font-semibold text-stone-500">
+                <span className="px-2 py-0.5 bg-[#FAF8F5] border border-[#ECE4D4] text-stone-700">COD</span>
+                <span className="px-2 py-0.5 bg-[#E2136E]/10 border border-[#E2136E]/30 text-[#E2136E]">bKash</span>
+                <span className="px-2 py-0.5 bg-[#F7941D]/10 border border-[#F7941D]/30 text-[#C26D0A]">Nagad</span>
+                <span>•</span>
+                <span>{isBn ? "৭ দিনের সহজ এক্সচেঞ্জ" : "7-Day Exchange"}</span>
+              </div>
             </div>
           )}
         </div>

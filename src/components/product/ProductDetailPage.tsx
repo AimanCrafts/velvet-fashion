@@ -112,7 +112,7 @@ const ProductDetailView: React.FC<ProductDetailViewProps> = ({ product }) => {
             {imgError ? (
               <div className="w-full h-full flex flex-col items-center justify-center bg-[#2A030C] text-[#F4E2B5] p-6 text-center">
                 <img
-                  src="/brand/velvet_emblem.jpg"
+                  src="./brand/velvet_emblem.jpg"
                   alt="Velvet Seal"
                   className="w-20 h-20 rounded-full border border-[#C5A059] mb-3 opacity-90 shadow-lg"
                 />

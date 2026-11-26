@@ -1,70 +1,77 @@
 import React from "react";
 import { useStore } from "../../context/StoreContext";
-import { Award, Compass, Feather, Sparkles } from "lucide-react";
+import { Award, Compass, Feather, ShieldCheck } from "lucide-react";
 
 export const EditorialStrip: React.FC = () => {
   const { isBn } = useStore();
 
   const highlights = [
     {
+      index: "01",
       icon: Feather,
-      title_en: "Artisanal Velvet & Pure Silk",
+      title_en: "Artisanal Velvet & Silk",
       title_bn: "মখমল ও পিওর সিল্ক কারুকাজ",
-      desc_en: "Selected premium lots woven for climate comfort, festive grandeur, and enduring drape.",
-      desc_bn: "বাংলাদেশের আবহাওয়া ও উৎসবের উপযোগী প্রিমিয়াম সিল্ক-ভেলভেট ও আরামদায়ক টেক্সটাইল।",
+      desc_en: "Selected textile lots woven for breathable drape and winter comfort.",
+      desc_bn: "বাংলাদেশের আবহাওয়া ও উৎসবের উপযোগী প্রিমিয়াম সিল্ক ও ভেলভেট।",
     },
     {
+      index: "02",
       icon: Award,
-      title_en: "Bespoke Cut & Zardozi Finishing",
-      title_bn: "নিখুঁত কাটিং ও জারদৌসি ফিনিশিং",
-      desc_en: "Clean silhouettes accented with delicate hand-embroidered Zari, dabka, and pearl buttons.",
-      desc_bn: "দক্ষ কারিগরদের নিখুঁত সেলাই, সূক্ষ্ম হাতের কাজ ও ঐতিহ্যবাহী জারদৌসি নকশার সংমিশ্রণ।",
+      title_en: "Handcrafted Zardozi",
+      title_bn: "নিখুঁত কাটিং ও জারদৌসি",
+      desc_en: "Clean tailored silhouettes accented with zari, dabka, and antiqued brass.",
+      desc_bn: "দক্ষ কারিগরদের হাতের জরি, দাবকা ও অ্যান্টিক মেটাল ফিনিশিং।",
     },
     {
+      index: "03",
       icon: Compass,
-      title_en: "Dhaka & 64 Districts Dispatch",
-      title_bn: "ঢাকা ও ৬৪ জেলায় হোম ডেলিভারি",
-      desc_en: "Express doorstep courier across Dhaka and nationwide with Cash on Delivery and bKash.",
-      desc_en_sub: "পণ্য দেখে নিশ্চিত হয়ে মূল্য পরিশোধের বিশ্বস্ত ক্যাশ অন ডেলিভারি সুবিধা।",
-      desc_bn: "ঢাকায় ২৪ ঘণ্টায় এবং সারাদেশে হোম ডেলিভারি ও পণ্য দেখে মূল্য পরিশোধের সুবিধা।",
+      title_en: "64 Districts Dispatch",
+      title_bn: "ঢাকা ও ৬৪ জেলায় ডেলিভারি",
+      desc_en: "24h Dhaka courier and nationwide Cash on Delivery or bKash.",
+      desc_bn: "ঢাকায় ২৪ ঘণ্টায় এবং সারাদেশে পণ্য দেখে মূল্য পরিশোধের সুবিধা।",
     },
     {
-      icon: Sparkles,
-      title_en: "Official Compliance & Licensing",
-      title_bn: "সরকারি লাইসেন্স ও নিরাপত্তা নিশ্চয়তা",
-      desc_en: "Operated in compliance with Bangladesh Digital Commerce Guidelines 2021 with transparent 7-day exchange.",
-      desc_bn: "ডিজিটাল কমার্স নির্দেশিকা ২০২১ অনুসারে পরিচালিত ও সহজ ৭ দিনের সাইজ এক্সচেঞ্জ সুবিধা।",
+      index: "04",
+      icon: ShieldCheck,
+      title_en: "Transparent Standards",
+      title_bn: "সরকারি লাইসেন্স ও নিশ্চয়তা",
+      desc_en: "Guided by BD Digital Commerce rules with a clear 7-day fit exchange.",
+      desc_bn: "ডিজিটাল কমার্স নির্দেশিকা মেনে পরিচালিত ও সহজ ৭ দিনের এক্সচেঞ্জ।",
     },
   ];
 
   return (
-    <section className="bg-[#24030B] text-[#FAF8F5] py-16 my-12 border-y border-[#C5A059]/30 relative overflow-hidden">
-      {/* Subtle background glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#3E0713] via-transparent to-transparent opacity-60" />
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#C5A059] block mb-2">
-            {isBn ? "ভেলভেট ফ্যাশন মানদণ্ড" : "THE VELVET ATELIER"}
-          </span>
-          <h2 className="font-['Playfair_Display'] text-2xl sm:text-3xl md:text-4xl font-normal text-white">
-            {isBn ? "আভিজাত্য ও ঐতিহ্যবাহী কারুকাজের সমন্বয়" : "Sartorial Excellence, Tailored for Bangladesh"}
-          </h2>
-          <div className="w-16 h-0.5 bg-[#C5A059] mx-auto mt-4" />
+    <section className="bg-[#24030B] text-[#FAF8F5] py-16 border-y border-[#C5A059]/30">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 pb-6 border-b border-white/10">
+          <div>
+            <span className="text-[10px] font-bold tracking-[0.28em] uppercase text-[#C5A059] block mb-2">
+              {isBn ? "ভেলভেট আতেলিয়ে মানদণ্ড" : "BEHIND THE SEAMS"}
+            </span>
+            <h2 className="font-['Playfair_Display'] text-2xl sm:text-3xl font-normal text-white">
+              {isBn ? "আভিজাত্য ও ঐতিহ্যবাহী কারুকাজের সমন্বয়" : "Craftsmanship Standard"}
+            </h2>
+          </div>
+          <p className="text-xs text-[#ECE4D4]/75 max-w-md">
+            {isBn
+              ? "প্রতিটি ব্যাচ ঢাকা ও নারায়ণগঞ্জের দক্ষ কারিগরদের তত্ত্বাবধানে পরীক্ষা করে ডিসপ্যাচ করা হয়।"
+              : "Every garment lot is individually inspected in Dhaka for weave integrity, finishing, and fit before release."}
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {highlights.map((item, idx) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {highlights.map((item) => {
             const Icon = item.icon;
             return (
               <div
-                key={idx}
-                className="bg-[#3E0713]/60 border border-[#C5A059]/20 rounded-2xl p-6 text-center hover:border-[#C5A059]/50 transition duration-300"
+                key={item.index}
+                className="bg-[#3E0713]/45 border border-[#C5A059]/25 p-6 hover:border-[#C5A059]/60 transition"
               >
-                <div className="w-12 h-12 rounded-full bg-[#FAF8F5]/10 border border-[#C5A059]/40 flex items-center justify-center mx-auto mb-4 text-[#F4E2B5]">
-                  <Icon className="w-5 h-5" />
+                <div className="flex items-center justify-between mb-5">
+                  <Icon className="w-5 h-5 text-[#E6C87C]" />
+                  <span className="font-mono text-[11px] text-[#C5A059]/80">{item.index}</span>
                 </div>
-                <h3 className="font-['Playfair_Display'] text-base font-semibold text-[#F4E2B5] mb-2">
+                <h3 className="font-['Playfair_Display'] text-lg text-[#F4E2B5] mb-2">
                   {isBn ? item.title_bn : item.title_en}
                 </h3>
                 <p className="text-xs text-[#ECE4D4]/80 leading-relaxed">

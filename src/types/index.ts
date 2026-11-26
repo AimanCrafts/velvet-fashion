@@ -2,6 +2,8 @@ export type Language = 'en' | 'bn';
 
 export type Audience = 'all' | 'men' | 'women' | 'kids' | 'unisex';
 
+export type OccasionFilter = 'all' | 'wedding' | 'festive' | 'evening' | 'everyday';
+
 export interface ProductVariant {
   id: string;
   sku: string;
@@ -37,6 +39,9 @@ export interface Product {
   fabric_en: string;
   fabric_bn: string;
   fabric_ar?: string; // legacy alias
+  occasions?: Exclude<OccasionFilter, 'all'>[];
+  editorialNote_en?: string;
+  editorialNote_bn?: string;
 }
 
 export interface CartItem {

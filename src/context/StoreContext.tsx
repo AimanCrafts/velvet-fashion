@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import type {
   Language,
   Audience,
+  OccasionFilter,
   Product,
   CartItem,
   Order,
@@ -45,6 +46,13 @@ export interface StoreContextType {
   products: Product[];
   activeAudience: Audience;
   setActiveAudience: (aud: Audience) => void;
+  activeOccasion: OccasionFilter;
+  setActiveOccasion: (occ: OccasionFilter) => void;
+  wishlistOnly: boolean;
+  setWishlistOnly: (only: boolean) => void;
+  inStockOnly: boolean;
+  setInStockOnly: (only: boolean) => void;
+  resetFilters: () => void;
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   sortBy: 'featured' | 'price-asc' | 'price-desc' | 'newest';
@@ -125,9 +133,21 @@ const generateLineItemId = (index: number): string => {
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [lang, setLang] = useState<Language>('en');
   const [activeAudience, setActiveAudience] = useState<Audience>('all');
+  const [activeOccasion, setActiveOccasion] = useState<OccasionFilter>('all');
+  const [wishlistOnly, setWishlistOnly] = useState(false);
+  const [inStockOnly, setInStockOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'newest'>('featured');
   const [selectedProductForQuickView, setSelectedProductForQuickView] = useState<Product | null>(null);
+
+  const resetFilters = () => {
+    setActiveAudience('all');
+    setActiveOccasion('all');
+    setWishlistOnly(false);
+    setInStockOnly(false);
+    setSearchQuery('');
+    setSortBy('featured');
+  };
 
   const [products, setProducts] = useState<Product[]>(sampleProducts);
   const [activeDeliveryZones, setActiveDeliveryZones] = useState<DeliveryZone[]>(deliveryZones);
@@ -159,7 +179,17 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (!isMounted) return;
 
       if (prodRes.status === 'fulfilled' && prodRes.value && prodRes.value.length > 0) {
-        setProducts(prodRes.value);
+        const enriched = prodRes.value.map((remoteProd) => {
+          const fallback = sampleProducts.find((sp) => sp.id === remoteProd.id);
+          return {
+            ...remoteProd,
+            additionalImages: remoteProd.additionalImages ?? fallback?.additionalImages,
+            occasions: remoteProd.occasions ?? fallback?.occasions,
+            editorialNote_en: remoteProd.editorialNote_en ?? fallback?.editorialNote_en,
+            editorialNote_bn: remoteProd.editorialNote_bn ?? fallback?.editorialNote_bn,
+          };
+        });
+        setProducts(enriched);
       }
       if (zoneRes.status === 'fulfilled' && zoneRes.value && zoneRes.value.length > 0) {
         setActiveDeliveryZones(zoneRes.value);
@@ -523,6 +553,13 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         products,
         activeAudience,
         setActiveAudience,
+        activeOccasion,
+        setActiveOccasion,
+        wishlistOnly,
+        setWishlistOnly,
+        inStockOnly,
+        setInStockOnly,
+        resetFilters,
         searchQuery,
         setSearchQuery,
         sortBy,

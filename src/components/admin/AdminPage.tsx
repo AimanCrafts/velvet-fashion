@@ -456,7 +456,7 @@ export const AdminPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-[#ECE4D4]">
           <div className="flex items-center gap-3">
             <img
-              src="/brand/velvet_emblem.jpg"
+              src="./brand/velvet_emblem.jpg"
               alt="Velvet Seal"
               className="w-12 h-12 rounded-full border border-[#C5A059] shadow-sm"
             />

@@ -4,6 +4,8 @@ import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
 import { HomePage } from "./pages/HomePage";
 import { ShopPage } from "./pages/ShopPage";
+import { LookbookPage } from "./pages/LookbookPage";
+import { TrackOrderPage } from "./pages/TrackOrderPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ProductDetailPage } from "./components/product/ProductDetailPage";
 import { CheckoutPage } from "./components/checkout/CheckoutPage";
@@ -25,6 +27,14 @@ function AppRoutes() {
 
   if (path === "/shop") {
     return <ShopPage />;
+  }
+
+  if (path === "/lookbook") {
+    return <LookbookPage />;
+  }
+
+  if (path === "/track") {
+    return <TrackOrderPage />;
   }
 
   if (path.startsWith("/product/")) {
@@ -54,24 +64,19 @@ function StorefrontShell() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 selection:bg-[#3E0713] selection:text-[#FAF8F5]">
-      {/* Toast notifications */}
       <Toast />
 
-      {/* Main navigation unless inside admin */}
       {!isAdmin && <Navbar minimal={isCheckout} />}
 
-      {/* Main Routed Page Content */}
       <main className="flex-1 flex flex-col">
         <AppRoutes />
       </main>
 
-      {/* Global Overlays & Modals */}
       <CartDrawer />
       <ProductQuickViewModal />
       <DesignSystemModal />
       <DemoDock />
 
-      {/* Footer unless inside admin */}
       {!isAdmin && !isCheckout && <Footer />}
     </div>
   );

@@ -60,7 +60,7 @@ export const DesignSystemModal: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white p-3 rounded-lg border border-[#ECE4D4] text-center">
                 <img
-                  src="/brand/velvet_emblem.jpg"
+                  src="./brand/velvet_emblem.jpg"
                   alt="Velvet Fashion Round Monogram"
                   className="w-32 h-32 object-contain mx-auto rounded-full shadow-md border-2 border-[#C5A059]"
                 />
@@ -72,7 +72,7 @@ export const DesignSystemModal: React.FC = () => {
 
               <div className="bg-white p-3 rounded-lg border border-[#ECE4D4] text-center">
                 <img
-                  src="/brand/velvet_brand_sheet.jpg"
+                  src="./brand/velvet_brand_sheet.jpg"
                   alt="Velvet Fashion Brand Lockup Grid"
                   className="w-full h-32 object-cover object-center mx-auto rounded shadow-sm border border-[#ECE4D4]"
                 />
