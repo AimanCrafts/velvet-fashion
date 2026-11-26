@@ -1,0 +1,15 @@
+# Velvet Fashion Bangladesh — Robots Policy
+User-agent: *
+Disallow: /admin
+Disallow: /#/admin
+Disallow: /checkout
+Disallow: /#/checkout
+Disallow: /order/
+Disallow: /#/order/
+Disallow: /api/
+Allow: /
+Allow: /shop
+Allow: /lookbook
+Allow: /product/
+
+Sitemap: https://velvetfashion.com.bd/sitemap.xml
